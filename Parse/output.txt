@@ -1,0 +1,58 @@
+
+Simulation began at 2019-11-07 12:57:44.780072
+
+Command line or default parameter values
+road length:       1000 meters
+time:              0.1 hours
+ped volume:        30 pedestrians/hour on entire road
+bike volume:       20 bikes/hour on entire road
+MV volume:         50 motor vehicles/hour on entire road
+ped % split:       50 % of pedestrian volume heading east
+bike % split:      50 % of bike volume heading east
+MV % split:        50 % of motor vehicle volume heading east
+ped speed:         1.3411 meters/second
+bike speed:        5.3645 meters/second
+MV speed:          11.176 meters/second
+ped speed distr:   0 0 = fixed, 1 = normal distribution
+bike speed distr:  0 0 = fixed, 1 = normal distribution
+MV speed distr:    0 0 = fixed, 1 = normal distribution
+Display level:     0
+Random seed:       0 . A 0 represents true randomization; any other value used as initial seed
+
+Simulation parameter values
+Road west end at 0 , east end at 1000 for a total of 1000 meters
+Clock started at 0 ticks and ran to 3600.0 ticks, with each tick = 0.1 seconds for a total of 0.1 hours.
+Number of Road User Sources = 6
+<WestBound Pedestrian    source at 01000.0 generating 0015.0 road users/hour.  Speed = 01.341 m/s, Speed Distr = 0 (0=fixed, 1=normal distribution), Length = 01.0 m, Minimum gap between consecutive road users = 0000.0 seconds.>
+<WestBound Bicycle       source at 01000.0 generating 0010.0 road users/hour.  Speed = 05.364 m/s, Speed Distr = 0 (0=fixed, 1=normal distribution), Length = 02.0 m, Minimum gap between consecutive road users = 0000.5 seconds.>
+<WestBound Motor Vehicle source at 01000.0 generating 0025.0 road users/hour.  Speed = 11.176 m/s, Speed Distr = 0 (0=fixed, 1=normal distribution), Length = 06.0 m, Minimum gap between consecutive road users = 0001.5 seconds.>
+<EastBound Pedestrian    source at 00000.0 generating 0015.0 road users/hour.  Speed = 01.341 m/s, Speed Distr = 0 (0=fixed, 1=normal distribution), Length = 01.0 m, Minimum gap between consecutive road users = 0000.0 seconds.>
+<EastBound Bicycle       source at 00000.0 generating 0010.0 road users/hour.  Speed = 05.364 m/s, Speed Distr = 0 (0=fixed, 1=normal distribution), Length = 02.0 m, Minimum gap between consecutive road users = 0000.5 seconds.>
+<EastBound Motor Vehicle source at 00000.0 generating 0025.0 road users/hour.  Speed = 11.176 m/s, Speed Distr = 0 (0=fixed, 1=normal distribution), Length = 06.0 m, Minimum gap between consecutive road users = 0001.5 seconds.>
+
+Simulation duration:    0.1 hours
+
+Interactions Log
+Total number of unaggregated interactions: 10
+Total number of recorded interactions: 2
+
+<Interaction ID       0: Code:  B   P. Start Time: 0236.1 secs, End Time: 0236.5 secs. Start Location: 00073.8 m, End Location: 00076.2 m. Extended= False. Road Users [<Road User ID      0: WestBound Bicycle       located off road at -0000.5 m, going 05.36 m/s, moving -0.5 m/tick. Length: 2.0 m, WE: -002.5 EE: -000.5. Created at 0063.9 secs and taken off the road at 0250.4 secs.>, <Road User ID      2: EastBound Pedestrian    located on road at 00239.8 m, going 01.34 m/s, moving 00.1 m/tick. Length: 1.0 m, WE: 0239.8 EE: 0240.8. Created at 0181.1 secs and taken off the road at 0000.0 secs.>].>
+<Interaction ID       1: Code:   M  P. Start Time: 0253.7 secs, End Time: 0254.3 secs. Start Location: 00097.4 m, End Location: 00103.7 m. Extended= False. Road Users [<Road User ID      1: WestBound Motor Vehicle located off road at -0000.3 m, going 11.18 m/s, moving -1.1 m/tick. Length: 6.0 m, WE: -006.3 EE: -000.3. Created at 0173.5 secs and taken off the road at 0263.0 secs.>, <Road User ID      2: EastBound Pedestrian    located on road at 00239.8 m, going 01.34 m/s, moving 00.1 m/tick. Length: 1.0 m, WE: 0239.8 EE: 0240.8. Created at 0181.1 secs and taken off the road at 0000.0 secs.>].>
+
+Road Users Log
+               Motor                                                           
+             Vehicles           Bicycles           Pedestrians           Totals
+EastBound       0                 0                   2                   2
+WestBound       1                 2                   1                   4
+Totals          1                2                   3                  6
+
+<Road User ID      0: WestBound Bicycle       located off road at -0000.5 m, going 05.36 m/s, moving -0.5 m/tick. Length: 2.0 m, WE: -002.5 EE: -000.5. Created at 0063.9 secs and taken off the road at 0250.4 secs.>
+<Road User ID      1: WestBound Motor Vehicle located off road at -0000.3 m, going 11.18 m/s, moving -1.1 m/tick. Length: 6.0 m, WE: -006.3 EE: -000.3. Created at 0173.5 secs and taken off the road at 0263.0 secs.>
+<Road User ID      2: EastBound Pedestrian    located off road at 00239.8 m, going 01.34 m/s, moving 00.1 m/tick. Length: 1.0 m, WE: 0239.8 EE: 0240.8. Created at 0181.1 secs and taken off the road at 0000.0 secs.>
+<Road User ID      3: WestBound Pedestrian    located off road at 00805.0 m, going 01.34 m/s, moving -0.1 m/tick. Length: 1.0 m, WE: 0804.0 EE: 0805.0. Created at 0214.5 secs and taken off the road at 0000.0 secs.>
+<Road User ID      4: WestBound Bicycle       located off road at 00916.3 m, going 05.36 m/s, moving -0.5 m/tick. Length: 2.0 m, WE: 0914.3 EE: 0916.3. Created at 0344.3 secs and taken off the road at 0000.0 secs.>
+<Road User ID      5: EastBound Pedestrian    located off road at 00013.4 m, going 01.34 m/s, moving 00.1 m/tick. Length: 1.0 m, WE: 0013.4 EE: 0014.4. Created at 0349.9 secs and taken off the road at 0000.0 secs.>
+
+Simulation finished at 2019-11-07 12:57:44.905965 . Program finished in 0.15277037110020464 seconds.
+
+Process finished with exit code 0

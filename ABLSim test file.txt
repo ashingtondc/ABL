@@ -1,0 +1,19 @@
+# test file to test platooning behavior
+# assumes road length of 1000 m
+
+# both directions of MVs have 2 pairs of MVs. Each pair has a slow MV in front and a faster one behind
+# one should be able to see the fast MVs catch up to the slow MVs, platoon with them, then speed off the windows
+# once the slow MV goes out of sight
+
+wait 1
+new_road_user Motor Vehicle 0800 6.0 05.0 EastBound
+new_road_user Motor Vehicle 0300 6.0 05.0 WestBound
+new_road_user Motor Vehicle 0650 6.0 25.0 EastBound
+new_road_user Motor Vehicle 0500 6.0 05.0 EastBound
+new_road_user Motor Vehicle 0450 6.0 25.0 WestBound
+new_road_user Motor Vehicle 0500 6.0 05.0 WestBound
+new_road_user Motor Vehicle 0900 6.0 40.0 WestBound
+new_road_user Motor Vehicle 0100 6.0 40.0 EastBound
+
+wait 150
+end_test

@@ -1,0 +1,1306 @@
+{
+    "start_time": "2019-12-03 02:41:07.320627",
+    "road_length": 1000.0,
+    "time": 0.2,
+    "ped_volume": 30.0,
+    "bike_volume": 20.0,
+    "mv_volume": 50.0,
+    "ped_%_split": 50.0,
+    "bike_%_split": 50.0,
+    "mv_%_split": 50.0,
+    "ped_speed": 1.3411,
+    "bike_speed": 5.3645,
+    "mv_speed": 11.176,
+    "ped_speed_distr": 1.0,
+    "bike_speed_distr": 1.0,
+    "mv_speed_distr": 1.0,
+    "display_level": 0.0,
+    "random_seed": 0.0,
+    "road": {
+        "west_end": 0.0,
+        "east_end": 1000.0,
+        "total": 1000.0
+    },
+    "clock": {
+        "start": 0.0,
+        "end": 7200.0,
+        "tick_length": 0.1,
+        "total": 0.2
+    },
+    "sources": [
+        {
+            "direction": "WestBound",
+            "type": "Pedestrian",
+            "location": 1000.0,
+            "generating": 15.0,
+            "speed": 1.341,
+            "speed_dist": 1.0,
+            "length": 0.0,
+            "min_gap": 1.0
+        },
+        {
+            "direction": "WestBound",
+            "type": "Bicycle",
+            "location": 1000.0,
+            "generating": 10.0,
+            "speed": 5.364,
+            "speed_dist": 1.0,
+            "length": 0.0,
+            "min_gap": 1.0
+        },
+        {
+            "direction": "WestBound",
+            "type": "Motor",
+            "location": 1000.0,
+            "generating": 25.0,
+            "speed": 11.176,
+            "speed_dist": 1.0,
+            "length": 0.0,
+            "min_gap": 1.0
+        },
+        {
+            "direction": "EastBound",
+            "type": "Pedestrian",
+            "location": 0.0,
+            "generating": 15.0,
+            "speed": 1.341,
+            "speed_dist": 1.0,
+            "length": 0.0,
+            "min_gap": 1.0
+        },
+        {
+            "direction": "EastBound",
+            "type": "Bicycle",
+            "location": 0.0,
+            "generating": 10.0,
+            "speed": 5.364,
+            "speed_dist": 1.0,
+            "length": 0.0,
+            "min_gap": 1.0
+        },
+        {
+            "direction": "EastBound",
+            "type": "Motor",
+            "location": 0.0,
+            "generating": 25.0,
+            "speed": 11.176,
+            "speed_dist": 1.0,
+            "length": 0.0,
+            "min_gap": 1.0
+        }
+    ],
+    "duration": 0.2,
+    "unaggregated": 333.0,
+    "recorded": 25.0,
+    "interactions": [
+        {
+            "id": 0.0,
+            "code": "MM",
+            "start_time": 270.2,
+            "end_time": 273.4,
+            "start_loc": 941.0,
+            "end_loc": 1000.0,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 1.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.7,
+                    "velocity": 8.53,
+                    "velocity_tick": 0.9,
+                    "length": 6.0,
+                    "we": 1000.7,
+                    "ee": 1006.7,
+                    "created": 159.9,
+                    "removed": 277.2
+                },
+                {
+                    "platoon": false,
+                    "id": 3.0,
+                    "type": "Motor Vehicle",
+                    "location": -0.2,
+                    "velocity": 10.22,
+                    "velocity_tick": -1.0,
+                    "length": 6.0,
+                    "we": -6.2,
+                    "ee": -0.2,
+                    "created": 270.2,
+                    "removed": 368.1
+                }
+            ]
+        },
+        {
+            "id": 1.0,
+            "code": "MP",
+            "start_time": 443.8,
+            "end_time": 444.6,
+            "start_loc": 61.4,
+            "end_loc": 68.0,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 5.0,
+                    "type": "Motor Vehicle",
+                    "location": -0.4,
+                    "velocity": 7.69,
+                    "velocity_tick": -0.8,
+                    "length": 6.0,
+                    "we": -6.4,
+                    "ee": -0.4,
+                    "created": 322.6,
+                    "removed": 452.7
+                },
+                {
+                    "platoon": false,
+                    "id": 8.0,
+                    "type": "Pedestrian",
+                    "location": 360.3,
+                    "velocity": 1.08,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 360.3,
+                    "ee": 361.3,
+                    "created": 387.1,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 2.0,
+            "code": "MP",
+            "start_time": 517.2,
+            "end_time": 517.9,
+            "start_loc": 7.7,
+            "end_loc": 14.0,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 11.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.0,
+                    "velocity": 9.61,
+                    "velocity_tick": 1.0,
+                    "length": 6.0,
+                    "we": 1000.0,
+                    "ee": 1006.0,
+                    "created": 516.4,
+                    "removed": 620.5
+                },
+                {
+                    "platoon": false,
+                    "id": 10.0,
+                    "type": "Pedestrian",
+                    "location": 109.5,
+                    "velocity": 0.48,
+                    "velocity_tick": 0.0,
+                    "length": 1.0,
+                    "we": 109.5,
+                    "ee": 110.5,
+                    "created": 490.0,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 3.0,
+            "code": "MP",
+            "start_time": 518.7,
+            "end_time": 519.5,
+            "start_loc": 22.1,
+            "end_loc": 29.0,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 9.0,
+                    "type": "Pedestrian",
+                    "location": 180.6,
+                    "velocity": 0.76,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 180.6,
+                    "ee": 181.6,
+                    "created": 481.8,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": false,
+                    "id": 11.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.0,
+                    "velocity": 9.61,
+                    "velocity_tick": 1.0,
+                    "length": 6.0,
+                    "we": 1000.0,
+                    "ee": 1006.0,
+                    "created": 516.4,
+                    "removed": 620.5
+                }
+            ]
+        },
+        {
+            "id": 4.0,
+            "code": "MP",
+            "start_time": 532.2,
+            "end_time": 533.0,
+            "start_loc": 151.8,
+            "end_loc": 158.1,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 11.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.0,
+                    "velocity": 9.61,
+                    "velocity_tick": 1.0,
+                    "length": 6.0,
+                    "we": 1000.0,
+                    "ee": 1006.0,
+                    "created": 516.4,
+                    "removed": 620.5
+                },
+                {
+                    "platoon": false,
+                    "id": 8.0,
+                    "type": "Pedestrian",
+                    "location": 360.3,
+                    "velocity": 1.08,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 360.3,
+                    "ee": 361.3,
+                    "created": 387.1,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 5.0,
+            "code": "MP",
+            "start_time": 558.6,
+            "end_time": 559.5,
+            "start_loc": 26.7,
+            "end_loc": 33.7,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": true,
+                    "id": 13.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.0,
+                    "velocity": 8.91,
+                    "velocity_tick": 0.9,
+                    "length": 6.0,
+                    "we": 1000.0,
+                    "ee": 1006.0,
+                    "created": 555.6,
+                    "removed": 667.8
+                },
+                {
+                    "platoon": false,
+                    "id": 10.0,
+                    "type": "Pedestrian",
+                    "location": 109.5,
+                    "velocity": 0.48,
+                    "velocity_tick": 0.0,
+                    "length": 1.0,
+                    "we": 109.5,
+                    "ee": 110.5,
+                    "created": 490.0,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 6.0,
+            "code": "MP",
+            "start_time": 561.8,
+            "end_time": 562.6,
+            "start_loc": 55.3,
+            "end_loc": 61.7,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 9.0,
+                    "type": "Pedestrian",
+                    "location": 180.6,
+                    "velocity": 0.76,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 180.6,
+                    "ee": 181.6,
+                    "created": 481.8,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": true,
+                    "id": 13.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.0,
+                    "velocity": 8.91,
+                    "velocity_tick": 0.9,
+                    "length": 6.0,
+                    "we": 1000.0,
+                    "ee": 1006.0,
+                    "created": 555.6,
+                    "removed": 667.8
+                }
+            ]
+        },
+        {
+            "id": 7.0,
+            "code": "MP",
+            "start_time": 575.8,
+            "end_time": 576.5,
+            "start_loc": 35.3,
+            "end_loc": 41.9,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": true,
+                    "id": 15.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.8,
+                    "velocity": 11.04,
+                    "velocity_tick": 1.1,
+                    "length": 6.0,
+                    "we": 1000.8,
+                    "ee": 1006.8,
+                    "created": 572.6,
+                    "removed": 669.9
+                },
+                {
+                    "platoon": false,
+                    "id": 10.0,
+                    "type": "Pedestrian",
+                    "location": 109.5,
+                    "velocity": 0.48,
+                    "velocity_tick": 0.0,
+                    "length": 1.0,
+                    "we": 109.5,
+                    "ee": 110.5,
+                    "created": 490.0,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 8.0,
+            "code": "MP",
+            "start_time": 578.2,
+            "end_time": 579.1,
+            "start_loc": 201.4,
+            "end_loc": 207.9,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": true,
+                    "id": 13.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.0,
+                    "velocity": 8.91,
+                    "velocity_tick": 0.9,
+                    "length": 6.0,
+                    "we": 1000.0,
+                    "ee": 1006.0,
+                    "created": 555.6,
+                    "removed": 667.8
+                },
+                {
+                    "platoon": false,
+                    "id": 8.0,
+                    "type": "Pedestrian",
+                    "location": 360.3,
+                    "velocity": 1.08,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 360.3,
+                    "ee": 361.3,
+                    "created": 387.1,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 9.0,
+            "code": "MP",
+            "start_time": 578.8,
+            "end_time": 579.4,
+            "start_loc": 68.5,
+            "end_loc": 74.6,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 9.0,
+                    "type": "Pedestrian",
+                    "location": 180.6,
+                    "velocity": 0.76,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 180.6,
+                    "ee": 181.6,
+                    "created": 481.8,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": true,
+                    "id": 15.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.8,
+                    "velocity": 11.04,
+                    "velocity_tick": 1.1,
+                    "length": 6.0,
+                    "we": 1000.8,
+                    "ee": 1006.8,
+                    "created": 572.6,
+                    "removed": 669.9
+                }
+            ]
+        },
+        {
+            "id": 10.0,
+            "code": "MM",
+            "start_time": 583.9,
+            "end_time": 587.5,
+            "start_loc": 648.4,
+            "end_loc": 714.0,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 11.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.0,
+                    "velocity": 9.61,
+                    "velocity_tick": 1.0,
+                    "length": 6.0,
+                    "we": 1000.0,
+                    "ee": 1006.0,
+                    "created": 516.4,
+                    "removed": 620.5
+                },
+                {
+                    "platoon": false,
+                    "id": 12.0,
+                    "type": "Motor Vehicle",
+                    "location": -0.3,
+                    "velocity": 8.62,
+                    "velocity_tick": -0.9,
+                    "length": 6.0,
+                    "we": -6.3,
+                    "ee": -0.3,
+                    "created": 550.7,
+                    "removed": 666.8
+                }
+            ]
+        },
+        {
+            "id": 11.0,
+            "code": "MP",
+            "start_time": 592.2,
+            "end_time": 592.9,
+            "start_loc": 216.4,
+            "end_loc": 223.1,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": true,
+                    "id": 15.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.8,
+                    "velocity": 11.04,
+                    "velocity_tick": 1.1,
+                    "length": 6.0,
+                    "we": 1000.8,
+                    "ee": 1006.8,
+                    "created": 572.6,
+                    "removed": 669.9
+                },
+                {
+                    "platoon": false,
+                    "id": 8.0,
+                    "type": "Pedestrian",
+                    "location": 360.3,
+                    "velocity": 1.08,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 360.3,
+                    "ee": 361.3,
+                    "created": 387.1,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 12.0,
+            "code": "MM",
+            "start_time": 606.6,
+            "end_time": 610.3,
+            "start_loc": 454.5,
+            "end_loc": 518.4,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": true,
+                    "id": 13.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.0,
+                    "velocity": 8.91,
+                    "velocity_tick": 0.9,
+                    "length": 6.0,
+                    "we": 1000.0,
+                    "ee": 1006.0,
+                    "created": 555.6,
+                    "removed": 667.8
+                },
+                {
+                    "platoon": false,
+                    "id": 12.0,
+                    "type": "Motor Vehicle",
+                    "location": -0.3,
+                    "velocity": 8.62,
+                    "velocity_tick": -0.9,
+                    "length": 6.0,
+                    "we": -6.3,
+                    "ee": -0.3,
+                    "created": 550.7,
+                    "removed": 666.8
+                }
+            ]
+        },
+        {
+            "id": 13.0,
+            "code": "MM",
+            "start_time": 610.3,
+            "end_time": 613.9,
+            "start_loc": 416.3,
+            "end_loc": 486.5,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": true,
+                    "id": 15.0,
+                    "type": "Motor Vehicle",
+                    "location": 1000.8,
+                    "velocity": 11.04,
+                    "velocity_tick": 1.1,
+                    "length": 6.0,
+                    "we": 1000.8,
+                    "ee": 1006.8,
+                    "created": 572.6,
+                    "removed": 669.9
+                },
+                {
+                    "platoon": false,
+                    "id": 12.0,
+                    "type": "Motor Vehicle",
+                    "location": -0.3,
+                    "velocity": 8.62,
+                    "velocity_tick": -0.9,
+                    "length": 6.0,
+                    "we": -6.3,
+                    "ee": -0.3,
+                    "created": 550.7,
+                    "removed": 666.8
+                }
+            ]
+        },
+        {
+            "id": 14.0,
+            "code": "MP",
+            "start_time": 633.0,
+            "end_time": 633.8,
+            "start_loc": 62.3,
+            "end_loc": 69.1,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 16.0,
+                    "type": "Motor Vehicle",
+                    "location": 908.6,
+                    "velocity": 9.74,
+                    "velocity_tick": 1.0,
+                    "length": 6.0,
+                    "we": 908.6,
+                    "ee": 914.6,
+                    "created": 626.6,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": false,
+                    "id": 10.0,
+                    "type": "Pedestrian",
+                    "location": 109.5,
+                    "velocity": 0.48,
+                    "velocity_tick": 0.0,
+                    "length": 1.0,
+                    "we": 109.5,
+                    "ee": 110.5,
+                    "created": 490.0,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 15.0,
+            "code": "MP",
+            "start_time": 634.9,
+            "end_time": 635.6,
+            "start_loc": 268.3,
+            "end_loc": 274.5,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 12.0,
+                    "type": "Motor Vehicle",
+                    "location": -0.3,
+                    "velocity": 8.62,
+                    "velocity_tick": -0.9,
+                    "length": 6.0,
+                    "we": -6.3,
+                    "ee": -0.3,
+                    "created": 550.7,
+                    "removed": 666.8
+                },
+                {
+                    "platoon": false,
+                    "id": 8.0,
+                    "type": "Pedestrian",
+                    "location": 360.3,
+                    "velocity": 1.08,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 360.3,
+                    "ee": 361.3,
+                    "created": 387.1,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 16.0,
+            "code": "MP",
+            "start_time": 638.2,
+            "end_time": 639.0,
+            "start_loc": 113.0,
+            "end_loc": 119.6,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 9.0,
+                    "type": "Pedestrian",
+                    "location": 180.6,
+                    "velocity": 0.76,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 180.6,
+                    "ee": 181.6,
+                    "created": 481.8,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": false,
+                    "id": 16.0,
+                    "type": "Motor Vehicle",
+                    "location": 908.6,
+                    "velocity": 9.74,
+                    "velocity_tick": 1.0,
+                    "length": 6.0,
+                    "we": 908.6,
+                    "ee": 914.6,
+                    "created": 626.6,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 17.0,
+            "code": "MM",
+            "start_time": 641.8,
+            "end_time": 645.5,
+            "start_loc": 148.0,
+            "end_loc": 215.1,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 16.0,
+                    "type": "Motor Vehicle",
+                    "location": 908.6,
+                    "velocity": 9.74,
+                    "velocity_tick": 1.0,
+                    "length": 6.0,
+                    "we": 908.6,
+                    "ee": 914.6,
+                    "created": 626.6,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": false,
+                    "id": 12.0,
+                    "type": "Motor Vehicle",
+                    "location": -0.3,
+                    "velocity": 8.62,
+                    "velocity_tick": -0.9,
+                    "length": 6.0,
+                    "we": -6.3,
+                    "ee": -0.3,
+                    "created": 550.7,
+                    "removed": 666.8
+                }
+            ]
+        },
+        {
+            "id": 18.0,
+            "code": "MP",
+            "start_time": 651.1,
+            "end_time": 651.9,
+            "start_loc": 128.4,
+            "end_loc": 135.0,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 9.0,
+                    "type": "Pedestrian",
+                    "location": 180.6,
+                    "velocity": 0.76,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 180.6,
+                    "ee": 181.6,
+                    "created": 481.8,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": false,
+                    "id": 12.0,
+                    "type": "Motor Vehicle",
+                    "location": -0.3,
+                    "velocity": 8.62,
+                    "velocity_tick": -0.9,
+                    "length": 6.0,
+                    "we": -6.3,
+                    "ee": -0.3,
+                    "created": 550.7,
+                    "removed": 666.8
+                }
+            ]
+        },
+        {
+            "id": 19.0,
+            "code": "MP",
+            "start_time": 655.9,
+            "end_time": 656.7,
+            "start_loc": 285.3,
+            "end_loc": 292.0,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 16.0,
+                    "type": "Motor Vehicle",
+                    "location": 908.6,
+                    "velocity": 9.74,
+                    "velocity_tick": 1.0,
+                    "length": 6.0,
+                    "we": 908.6,
+                    "ee": 914.6,
+                    "created": 626.6,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": false,
+                    "id": 8.0,
+                    "type": "Pedestrian",
+                    "location": 360.3,
+                    "velocity": 1.08,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 360.3,
+                    "ee": 361.3,
+                    "created": 387.1,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 20.0,
+            "code": "MP",
+            "start_time": 656.8,
+            "end_time": 657.6,
+            "start_loc": 79.5,
+            "end_loc": 85.9,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 12.0,
+                    "type": "Motor Vehicle",
+                    "location": -0.3,
+                    "velocity": 8.62,
+                    "velocity_tick": -0.9,
+                    "length": 6.0,
+                    "we": -6.3,
+                    "ee": -0.3,
+                    "created": 550.7,
+                    "removed": 666.8
+                },
+                {
+                    "platoon": false,
+                    "id": 10.0,
+                    "type": "Pedestrian",
+                    "location": 109.5,
+                    "velocity": 0.48,
+                    "velocity_tick": 0.0,
+                    "length": 1.0,
+                    "we": 109.5,
+                    "ee": 110.5,
+                    "created": 490.0,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 21.0,
+            "code": "MM",
+            "start_time": 665.9,
+            "end_time": 666.4,
+            "start_loc": 0.0,
+            "end_loc": 7.4,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 17.0,
+                    "type": "Motor Vehicle",
+                    "location": 487.6,
+                    "velocity": 9.03,
+                    "velocity_tick": 0.9,
+                    "length": 6.0,
+                    "we": 487.6,
+                    "ee": 493.6,
+                    "created": 665.9,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": false,
+                    "id": 12.0,
+                    "type": "Motor Vehicle",
+                    "location": -0.3,
+                    "velocity": 8.62,
+                    "velocity_tick": -0.9,
+                    "length": 6.0,
+                    "we": -6.3,
+                    "ee": -0.3,
+                    "created": 550.7,
+                    "removed": 666.8
+                }
+            ]
+        },
+        {
+            "id": 22.0,
+            "code": "MP",
+            "start_time": 675.0,
+            "end_time": 675.9,
+            "start_loc": 82.2,
+            "end_loc": 89.2,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 17.0,
+                    "type": "Motor Vehicle",
+                    "location": 487.6,
+                    "velocity": 9.03,
+                    "velocity_tick": 0.9,
+                    "length": 6.0,
+                    "we": 487.6,
+                    "ee": 493.6,
+                    "created": 665.9,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": false,
+                    "id": 10.0,
+                    "type": "Pedestrian",
+                    "location": 109.5,
+                    "velocity": 0.48,
+                    "velocity_tick": 0.0,
+                    "length": 1.0,
+                    "we": 109.5,
+                    "ee": 110.5,
+                    "created": 490.0,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 23.0,
+            "code": "MP",
+            "start_time": 682.1,
+            "end_time": 682.9,
+            "start_loc": 146.3,
+            "end_loc": 152.9,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 9.0,
+                    "type": "Pedestrian",
+                    "location": 180.6,
+                    "velocity": 0.76,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 180.6,
+                    "ee": 181.6,
+                    "created": 481.8,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": false,
+                    "id": 17.0,
+                    "type": "Motor Vehicle",
+                    "location": 487.6,
+                    "velocity": 9.03,
+                    "velocity_tick": 0.9,
+                    "length": 6.0,
+                    "we": 487.6,
+                    "ee": 493.6,
+                    "created": 665.9,
+                    "removed": 0.0
+                }
+            ]
+        },
+        {
+            "id": 24.0,
+            "code": "MP",
+            "start_time": 703.2,
+            "end_time": 704.1,
+            "start_loc": 336.8,
+            "end_loc": 343.2,
+            "extended": true,
+            "road_users": [
+                {
+                    "platoon": false,
+                    "id": 17.0,
+                    "type": "Motor Vehicle",
+                    "location": 487.6,
+                    "velocity": 9.03,
+                    "velocity_tick": 0.9,
+                    "length": 6.0,
+                    "we": 487.6,
+                    "ee": 493.6,
+                    "created": 665.9,
+                    "removed": 0.0
+                },
+                {
+                    "platoon": false,
+                    "id": 8.0,
+                    "type": "Pedestrian",
+                    "location": 360.3,
+                    "velocity": 1.08,
+                    "velocity_tick": 0.1,
+                    "length": 1.0,
+                    "we": 360.3,
+                    "ee": 361.3,
+                    "created": 387.1,
+                    "removed": 0.0
+                }
+            ]
+        }
+    ],
+    "road_users": {
+        "eastbound": {
+            "motor_vehicles": 6.0,
+            "bicycles": 0.0,
+            "peds": 8.0,
+            "total": 14.0
+        },
+        "westbound": {
+            "motor_vehicles": 3.0,
+            "bicycles": 0.0,
+            "peds": 3.0,
+            "total": 6.0
+        },
+        "totals": {
+            "motor_vehicles": 9.0,
+            "bicycles": 0.0,
+            "peds": 11.0,
+            "total": 20.0
+        },
+        "list": [
+            {
+                "platoon": false,
+                "id": 0.0,
+                "type": "Pedestrian",
+                "location": -0.1,
+                "velocity": -1.31,
+                "velocity_tick": -0.1,
+                "length": 1.0,
+                "we": -0.1,
+                "ee": 0.9,
+                "created": 108.1,
+                "removed": 108.2
+            },
+            {
+                "platoon": false,
+                "id": 1.0,
+                "type": "Motor Vehicle",
+                "location": 1000.7,
+                "velocity": 8.53,
+                "velocity_tick": 0.9,
+                "length": 6.0,
+                "we": 1000.7,
+                "ee": 1006.7,
+                "created": 159.9,
+                "removed": 277.2
+            },
+            {
+                "platoon": false,
+                "id": 2.0,
+                "type": "Pedestrian",
+                "location": 1000.0,
+                "velocity": -0.3,
+                "velocity_tick": 0.0,
+                "length": 1.0,
+                "we": 999.0,
+                "ee": 1000.0,
+                "created": 194.8,
+                "removed": 194.9
+            },
+            {
+                "platoon": false,
+                "id": 3.0,
+                "type": "Motor Vehicle",
+                "location": -0.2,
+                "velocity": 10.22,
+                "velocity_tick": -1.0,
+                "length": 6.0,
+                "we": -6.2,
+                "ee": -0.2,
+                "created": 270.2,
+                "removed": 368.1
+            },
+            {
+                "platoon": false,
+                "id": 4.0,
+                "type": "Pedestrian",
+                "location": 1000.1,
+                "velocity": -1.09,
+                "velocity_tick": 0.1,
+                "length": 1.0,
+                "we": 999.1,
+                "ee": 1000.1,
+                "created": 270.9,
+                "removed": 271.0
+            },
+            {
+                "platoon": false,
+                "id": 5.0,
+                "type": "Motor Vehicle",
+                "location": -0.4,
+                "velocity": 7.69,
+                "velocity_tick": -0.8,
+                "length": 6.0,
+                "we": -6.4,
+                "ee": -0.4,
+                "created": 322.6,
+                "removed": 452.7
+            },
+            {
+                "platoon": false,
+                "id": 6.0,
+                "type": "Pedestrian",
+                "location": -0.2,
+                "velocity": -1.84,
+                "velocity_tick": -0.2,
+                "length": 1.0,
+                "we": -0.2,
+                "ee": 0.8,
+                "created": 339.4,
+                "removed": 339.5
+            },
+            {
+                "platoon": false,
+                "id": 7.0,
+                "type": "Pedestrian",
+                "location": -0.1,
+                "velocity": -0.57,
+                "velocity_tick": -0.1,
+                "length": 1.0,
+                "we": -0.1,
+                "ee": 0.9,
+                "created": 365.8,
+                "removed": 365.9
+            },
+            {
+                "platoon": false,
+                "id": 8.0,
+                "type": "Pedestrian",
+                "location": 360.3,
+                "velocity": 1.08,
+                "velocity_tick": 0.1,
+                "length": 1.0,
+                "we": 360.3,
+                "ee": 361.3,
+                "created": 387.1,
+                "removed": 0.0
+            },
+            {
+                "platoon": false,
+                "id": 9.0,
+                "type": "Pedestrian",
+                "location": 180.6,
+                "velocity": 0.76,
+                "velocity_tick": 0.1,
+                "length": 1.0,
+                "we": 180.6,
+                "ee": 181.6,
+                "created": 481.8,
+                "removed": 0.0
+            },
+            {
+                "platoon": false,
+                "id": 10.0,
+                "type": "Pedestrian",
+                "location": 109.5,
+                "velocity": 0.48,
+                "velocity_tick": 0.0,
+                "length": 1.0,
+                "we": 109.5,
+                "ee": 110.5,
+                "created": 490.0,
+                "removed": 0.0
+            },
+            {
+                "platoon": false,
+                "id": 11.0,
+                "type": "Motor Vehicle",
+                "location": 1000.0,
+                "velocity": 9.61,
+                "velocity_tick": 1.0,
+                "length": 6.0,
+                "we": 1000.0,
+                "ee": 1006.0,
+                "created": 516.4,
+                "removed": 620.5
+            },
+            {
+                "platoon": false,
+                "id": 12.0,
+                "type": "Motor Vehicle",
+                "location": -0.3,
+                "velocity": 8.62,
+                "velocity_tick": -0.9,
+                "length": 6.0,
+                "we": -6.3,
+                "ee": -0.3,
+                "created": 550.7,
+                "removed": 666.8
+            },
+            {
+                "platoon": true,
+                "id": 13.0,
+                "type": "Motor Vehicle",
+                "location": 1000.0,
+                "velocity": 8.91,
+                "velocity_tick": 0.9,
+                "length": 6.0,
+                "we": 1000.0,
+                "ee": 1006.0,
+                "created": 555.6,
+                "removed": 667.8
+            },
+            {
+                "platoon": false,
+                "id": 14.0,
+                "type": "Pedestrian",
+                "location": -0.1,
+                "velocity": -1.14,
+                "velocity_tick": -0.1,
+                "length": 1.0,
+                "we": -0.1,
+                "ee": 0.9,
+                "created": 559.7,
+                "removed": 559.8
+            },
+            {
+                "platoon": true,
+                "id": 15.0,
+                "type": "Motor Vehicle",
+                "location": 1000.8,
+                "velocity": 11.04,
+                "velocity_tick": 1.1,
+                "length": 6.0,
+                "we": 1000.8,
+                "ee": 1006.8,
+                "created": 572.6,
+                "removed": 669.9
+            },
+            {
+                "platoon": false,
+                "id": 16.0,
+                "type": "Motor Vehicle",
+                "location": 908.6,
+                "velocity": 9.74,
+                "velocity_tick": 1.0,
+                "length": 6.0,
+                "we": 908.6,
+                "ee": 914.6,
+                "created": 626.6,
+                "removed": 0.0
+            },
+            {
+                "platoon": false,
+                "id": 17.0,
+                "type": "Motor Vehicle",
+                "location": 487.6,
+                "velocity": 9.03,
+                "velocity_tick": 0.9,
+                "length": 6.0,
+                "we": 487.6,
+                "ee": 493.6,
+                "created": 665.9,
+                "removed": 0.0
+            },
+            {
+                "platoon": false,
+                "id": 18.0,
+                "type": "Pedestrian",
+                "location": -0.1,
+                "velocity": -1.08,
+                "velocity_tick": -0.1,
+                "length": 1.0,
+                "we": -0.1,
+                "ee": 0.9,
+                "created": 667.9,
+                "removed": 668.0
+            },
+            {
+                "platoon": false,
+                "id": 19.0,
+                "type": "Pedestrian",
+                "location": 953.7,
+                "velocity": 1.48,
+                "velocity_tick": -0.1,
+                "length": 1.0,
+                "we": 952.7,
+                "ee": 953.7,
+                "created": 688.6,
+                "removed": 0.0
+            }
+        ]
+    },
+    "end_time": "2019-12-03 02:41:07.424547",
+    "prog_duration": 0.1052958
+}
