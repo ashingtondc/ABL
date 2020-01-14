@@ -160,20 +160,28 @@ def parseData(filename):
             vals = extract_nums(line)
             platoon = re.search("Platoon: *(\w*)", line).group(1)
             user_type = re.search("Pedestrian|Motor Vehicle|Bicycle", line).group()
+            direction = re.search("EastBound|WestBound", line).group()
+            left = re.search("Left On Road:\s*(\w*).", line).group(1)
             if platoon == "Yes":
                 dummy['platoon'] = True
             else:
                 dummy['platoon'] = False
+            if left == "Yes":
+                dummy['left_on_road'] = True
+            else:
+                dummy['left_on_road'] = False
             dummy['id'] = vals[0]
+            dummy['direction'] = direction
             dummy['type'] = user_type
-            dummy['location'] = vals[1]
-            dummy['velocity'] = vals[2]
-            dummy['velocity_tick'] = vals[3]
-            dummy['length'] = vals[4]
-            dummy['we'] = vals[5]
-            dummy['ee'] = vals[6]
-            dummy['created'] = vals[7]
-            dummy['removed'] = vals[8]
+            dummy['create_pos'] = vals[1]
+            dummy['location'] = vals[2]
+            dummy['velocity'] = vals[3]
+            dummy['velocity_tick'] = vals[4]
+            dummy['length'] = vals[5]
+            dummy['we'] = vals[6]
+            dummy['ee'] = vals[7]
+            dummy['created'] = vals[8]
+            dummy['removed'] = vals[9]
             users.append(dummy)
             line = file.readline()
         road_users['list'] = users
@@ -200,20 +208,28 @@ def extract_road_users(road_users, line):
         vals = extract_nums(user)
         platoon = re.search("Platoon: *(\w*)", user).group(1)
         user_type = re.search("Pedestrian|Motor Vehicle|Bicycle", user).group()
+        direction = re.search("EastBound|WestBound", line).group()
+        left = re.search("Left On Road:\s*(\w*).", user).group(1)
         if platoon == "Yes":
             dummy['platoon'] = True
         else:
             dummy['platoon'] = False
+        if left == "Yes":
+            dummy['left_on_road'] = True
+        else:
+            dummy['left_on_road'] = False
         dummy['id'] = vals[0]
+        dummy['direction'] = direction
         dummy['type'] = user_type
-        dummy['location'] = vals[1]
-        dummy['velocity'] = vals[2]
-        dummy['velocity_tick'] = vals[3]
-        dummy['length'] = vals[4]
-        dummy['we'] = vals[5]
-        dummy['ee'] = vals[6]
-        dummy['created'] = vals[7]
-        dummy['removed'] = vals[8]
+        dummy['create_pos'] = vals[1]
+        dummy['location'] = vals[2]
+        dummy['velocity'] = vals[3]
+        dummy['velocity_tick'] = vals[4]
+        dummy['length'] = vals[5]
+        dummy['we'] = vals[6]
+        dummy['ee'] = vals[7]
+        dummy['created'] = vals[8]
+        dummy['removed'] = vals[9]
         road_users.append(dummy)
 
 

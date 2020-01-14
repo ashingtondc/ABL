@@ -272,6 +272,7 @@ class RoadUser:
        Attributes are:
         ID: 0 - 250,000 int, unique to each road user instance
         Type: Motor Vehicle, Bicycle, Pedestrian
+        CreateLocation: 0 - 50,000 m float location where road user is created
         Location: 0 - 50,000 m float
         Length: 0.1 - 100 m float
         Speed: 1 - 60 m/s float
@@ -282,6 +283,7 @@ class RoadUser:
         Front: for a westbound RU, this is the WestEnd. for an eastbound RU, it is the EastEnd, same type as Location
         Rear:  for a westbound RU, this is the EastEnd. for an eastbound RU, it is the WestEnd, same type as Location
         Platooned: a flag which is true if the road user has ever been a leader or a member of a platoon, else false
+        LeftOnRoad: a flag which is true if the road user is still on the road when the simulation ends, else false
         Create_Time: the time, in real seconds, that the road user was created (and placed on road)
         End_Time: the time, in real seconds, that the road user left the road
 
@@ -317,21 +319,24 @@ class RoadUser:
         self._ID = RoadUser.id
         RoadUser.id += 1
         self._type = typ
+        self._createlocation = location
         self._location = location
         self._length = length
-        self._speed = speed
         self._direction = dirxn
         self._platooned = False
+        self._leftonroad = False
         self._create_time = clk.real_time()
         self._offroad_time = 0
 
         if self._direction == 'EastBound':
+            self._speed = speed
             self._step = step
             self._east_end = self._location + self._length
             self._west_end = self._location
             self._front = self._east_end
             self._rear = self._west_end
         else:  # road user is WestBound
+            self._speed = -speed
             self._step = -step
             self._east_end = self._location
             self._west_end = self._location - self._length
@@ -372,6 +377,11 @@ class RoadUser:
         else:
             platoon_status = ' Platoon:  No.'
 
+        if self._leftonroad:
+            lor_status = ' Left On Road: Yes.'
+        else:
+            lor_status = ' Left On Road:  No.'
+
         type = 'Motor Vehicle'
         if self._type == 'Bicycle':
             type = 'Bicycle      '
@@ -380,14 +390,14 @@ class RoadUser:
 
         road_user_string = '<' + \
                 'Road User ID ' + '{:6d}'.format(self._ID) + ': ' + self._direction + ' ' + type + \
-                ' located ' + road_status + \
-                ' at ' + '{:07.1f}'.format(self._location) + ' m, going ' + '{:05.2f}'.format(self._speed) + \
-                ' m/s, moving ' + '{:04.1f}'.format(self._step) + ' m/tick.' + \
-                ' Length: ' + '{:03.1f}'.format(self._length) + ' m,' + \
-                ' WE: ' + '{:06.1f}'.format(self._west_end) + ' EE: ' + '{:06.1f}'.format(self._east_end) + '.' + \
-                platoon_status + \
-                ' Created at ' + '{:06.1f}'.format(self._create_time) + ' secs and taken off the road at ' + \
-                '{:06.1f}'.format(self._offroad_time) + ' secs.' + \
+                ' created at ' + '{:09.3f}'.format(self._createlocation) + ' m, located ' + road_status + \
+                ' at ' + '{:09.3f}'.format(self._location) + ' m, going ' + '{:06.2f}'.format(self._speed) + \
+                ' m/s, moving ' + '{:05.2f}'.format(self._step) + ' m/tick.' + \
+                ' Length: ' + '{:05.2f}'.format(self._length) + ' m,' + \
+                ' WE: ' + '{:09.3f}'.format(self._west_end) + ' EE: ' + '{:09.3f}'.format(self._east_end) + '.' + \
+                platoon_status + lor_status + \
+                ' Created at ' + '{:010.2f}'.format(self._create_time) + ' secs and taken off the road at ' + \
+                '{:010.2f}'.format(self._offroad_time) + ' secs.' + \
                 '>'
         return road_user_string
 
@@ -527,17 +537,16 @@ class RoadUser:
         print()
 
         # move all of the road users still on the road into the off road list and sort by road user ID
+        # be sure to mark the road user as one that was still on the road when the simulation ended
         while len(RoadUser.OnRoad) != 0:
             for ru in RoadUser.OnRoad:
-                RoadUser.transfer_road_user_to_off_road(ru, 0)
+                ru._leftonroad = True
+                RoadUser.transfer_road_user_to_off_road(ru, clk.real_time())
         RoadUser.OffRoad.sort(key=attrgetter('_ID'))
 
         # write out all of the road users in the Off Road list
         for ru in RoadUser.OffRoad:
-            print (ru)
-            # print('Road User:', ru._ID, 'a', ru._direction, ru._type, 'at', ru._location, 'going', ru._speed, 'm/s,',
-            #       ru._length, 'm in length,', 'moving', ru._step, 'm ea tick,',
-            #       'WE:', ru._west_end, 'EE:', ru._east_end, 'time:', ru._create_time, 'to', ru._offroad_time)
+            print(ru)
 
     def oncoming_MVs(self, ru2):
         """Return True if the 2 road users are oncoming motor vehicles which haven't passed each other, else False
@@ -732,6 +741,7 @@ class RoadUserSource:
               This fcn returns the road user which was added or None if no road user was added
         """
         if clk.real_time() >= self.time_of_next:
+            # this code generates a new road user.
             # a new road user can either be given a fixed speed or a random speed pulled
             # from a normal distribution with the nominal speed at the 85th percentile and the 15th
             # percentile being the nominal speed less 2.222 m/s (8 kph/4.98 MPH) (mean = nominal speed - 1.11 m/s,
@@ -743,19 +753,32 @@ class RoadUserSource:
             # SD = 1.1 m/s for motor vehicles but I just picked one value that would work OK for vehicles, bikes, and
             # peds - that guess came out to 1.5 m/s. If we want values for each type, I thought the following values
             # would be good: MV - 1.11; Bike - 2; Ped - 1.23
-            if self.speed_distr == 0:                     # fixed speed
+            if self.speed_distr == 0:                       # fixed speed
               instance_speed = self.nominal_speed
-            elif self.speed_distr == 1:                   # variable speed pulled from a distribution
-                sigma = 1.11                                # assume SD value for motor vehicle
-                if self.type == 'Bicycle':
+            elif self.speed_distr == 1:                     # use a variable speed pulled from a distribution
+                if self.type == 'Motor Vehicle':
+                    sigma = 1.11
+                    lower_bound = 2.235                     # lower bound for speed = 5 MPH
+                elif self.type == 'Bicycle':
                     sigma = 2
+                    lower_bound = 1.788                     # lower bound for speed = 4 MPH
                 elif self.type == 'Pedestrian':
                     sigma = 1.23
-                # sigma = 1.5                                 # overwrite with compromise value of SD for all modes
-                mu = self.nominal_speed - sigma             # calculate mean using symmetry of 85 and 15 %ile
-                instance_speed = random.gauss(mu, sigma)
+                    lower_bound = 0.447                     # lower bound for speed = 1 MPH
+                else:
+                    print("problem with type of road user in add_new_road_users")
+
+                # this code gets a randomly generated speed assuming nominal speed is the 85th percentile speed.
+                # the generated speed must be equal to or above the lower bound set for each road user type
+                # sigma is subtracted from the nominal speed to get a value close to the mean for a normal distribution
+                instance_speed = -1
+                while instance_speed < lower_bound:
+                    mu = self.nominal_speed - sigma             # calculate mean using symmetry of 85 and 15 %ile
+                    instance_speed = random.gauss(mu, sigma)
+                # print("Speed for the", self.direction, self.type, "is", instance_speed, "m/s, lower bound is", lower_bound)
+
             else:
-                print ("problem with speed distribution value in add_new_road_users, value incorrect")
+                print("problem with speed distribution value in add_new_road_users, value incorrect")
             # print(clk.real_time(), 'secs:', self.direction, self.type, 'speed = ', instance_speed, 'm/s, created at',
             #       self.birthplace, '. Next one due at', self.time_of_next, 'seconds.')
 
@@ -1258,10 +1281,10 @@ if __name__ == '__main__':
     # get command line parameter values
     parser = argparse.ArgumentParser(description='Simulate an ABL and count road user interactions.')
     parser.add_argument("-r",  "--roadlen",   type=int,   default=1000,    help="specify road length in meters")
-    parser.add_argument("-t",  "--time",      type=float, default=20,     help="specify simulation duration in hours")
+    parser.add_argument("-t",  "--time",      type=float, default=1.0,     help="specify simulation duration in hours")
 
-    parser.add_argument("-c",  "--cychr",     type=int,   default=20,      help="specify # of cyclists per hour")
-    parser.add_argument("-p",  "--pedhr",     type=int,   default=30,      help="specify # of pedestrians per hour")
+    parser.add_argument("-c",  "--cychr",     type=int,   default=10,      help="specify # of cyclists per hour")
+    parser.add_argument("-p",  "--pedhr",     type=int,   default=5,      help="specify # of pedestrians per hour")
     parser.add_argument("-v",  "--mvhr",      type=int,   default=50,      help="specify # of motor vehicles per hour, "
                         "range 0-3600")
     # do we want to add ranges to ped and bike volumes as well?

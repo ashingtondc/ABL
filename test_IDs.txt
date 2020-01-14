@@ -1,0 +1,69 @@
+pygame 1.9.6
+Hello from the pygame community. https://www.pygame.org/contribute.html
+
+Simulation began at 2019-12-26 00:41:24.193475
+
+Command line or default parameter values
+road length:       500 meters
+time:              0.2 hours
+ped volume:        5 pedestrians/hour on entire road
+bike volume:       10 bikes/hour on entire road
+MV volume:         50 motor vehicles/hour on entire road
+ped % split:       50 % of pedestrian volume heading east
+bike % split:      50 % of bike volume heading east
+MV % split:        50 % of motor vehicle volume heading east
+ped speed:         1.3411 meters/second
+bike speed:        5.3645 meters/second
+MV speed:          11.176 meters/second
+ped speed distr:   1 0 = fixed, 1 = normal distribution
+bike speed distr:  1 0 = fixed, 1 = normal distribution
+MV speed distr:    1 0 = fixed, 1 = normal distribution
+Display level:     0
+Random seed:       0 . A 0 represents true randomization; any other value used as initial seed
+
+Simulation parameter values
+Road west end at 0 , east end at 500 for a total of 500 meters
+Clock started at 0 ticks and ran to 7200.0 ticks, with each tick = 0.1 seconds for a total of 0.2 hours.
+Number of Road User Sources = 6
+<WestBound Pedestrian    source at 00500.0 generating 0002.5 road users/hour.  Speed = 01.341 m/s, Speed Distr = 1 (0=fixed, 1=normal distribution), Length = 01.0 m, Minimum gap between consecutive road users = 0000.0 seconds.>
+<WestBound Bicycle       source at 00500.0 generating 0005.0 road users/hour.  Speed = 05.364 m/s, Speed Distr = 1 (0=fixed, 1=normal distribution), Length = 02.0 m, Minimum gap between consecutive road users = 0000.5 seconds.>
+<WestBound Motor Vehicle source at 00500.0 generating 0025.0 road users/hour.  Speed = 11.176 m/s, Speed Distr = 1 (0=fixed, 1=normal distribution), Length = 06.0 m, Minimum gap between consecutive road users = 0001.5 seconds.>
+<EastBound Pedestrian    source at 00000.0 generating 0002.5 road users/hour.  Speed = 01.341 m/s, Speed Distr = 1 (0=fixed, 1=normal distribution), Length = 01.0 m, Minimum gap between consecutive road users = 0000.0 seconds.>
+<EastBound Bicycle       source at 00000.0 generating 0005.0 road users/hour.  Speed = 05.364 m/s, Speed Distr = 1 (0=fixed, 1=normal distribution), Length = 02.0 m, Minimum gap between consecutive road users = 0000.5 seconds.>
+<EastBound Motor Vehicle source at 00000.0 generating 0025.0 road users/hour.  Speed = 11.176 m/s, Speed Distr = 1 (0=fixed, 1=normal distribution), Length = 06.0 m, Minimum gap between consecutive road users = 0001.5 seconds.>
+
+Simulation duration:    0.2 hours
+
+Interactions Log
+Total number of unaggregated interactions: 43
+Total number of recorded interactions: 6
+
+<Interaction ID       0: Code:   MM  . Start Time: 0278.0 secs, End Time: 0278.8 secs. Start Location: 00209.7 m, End Location: 00223.2 m. Extended= True . Road Users [<Road User ID      3: EastBound Motor Vehicle created at 00000.000 m, located off road at 00500.408 m, going 009.89 m/s, moving 00.99 m/tick. Length: 06.00 m, WE: 00500.408 EE: 00506.408. Platoon:  No. Left On Road:  No. Created at 0000256.80 secs and taken off the road at 0000307.40 secs.>, <Road User ID      2: WestBound Motor Vehicle created at 00500.000 m, located off road at -0000.341 m, going -09.35 m/s, moving -0.94 m/tick. Length: 06.00 m, WE: -0006.341 EE: -0000.341. Platoon:  No. Left On Road:  No. Created at 0000248.40 secs and taken off the road at 0000301.90 secs.>].>
+<Interaction ID       1: Code:  B M  . Start Time: 0547.8 secs, End Time: 0548.4 secs. Start Location: 00476.1 m, End Location: 00483.8 m. Extended= False. Road Users [<Road User ID      9: WestBound Bicycle       created at 00500.000 m, located off road at -0000.023 m, going -03.31 m/s, moving -0.33 m/tick. Length: 02.00 m, WE: -0002.023 EE: -0000.023. Platoon:  No. Left On Road:  No. Created at 0000542.90 secs and taken off the road at 0000693.80 secs.>, <Road User ID      7: EastBound Motor Vehicle created at 00000.000 m, located off road at 00500.482 m, going 009.76 m/s, moving 00.98 m/tick. Length: 06.00 m, WE: 00500.482 EE: 00506.482. Platoon:  No. Left On Road:  No. Created at 0000499.00 secs and taken off the road at 0000550.30 secs.>].>
+<Interaction ID       2: Code:  B M  . Start Time: 0566.7 secs, End Time: 0567.4 secs. Start Location: 00413.5 m, End Location: 00421.1 m. Extended= False. Road Users [<Road User ID      8: EastBound Motor Vehicle created at 00000.000 m, located off road at 00500.588 m, going 009.07 m/s, moving 00.91 m/tick. Length: 06.00 m, WE: 00500.588 EE: 00506.588. Platoon:  No. Left On Road:  No. Created at 0000521.10 secs and taken off the road at 0000576.30 secs.>, <Road User ID      9: WestBound Bicycle       created at 00500.000 m, located off road at -0000.023 m, going -03.31 m/s, moving -0.33 m/tick. Length: 02.00 m, WE: -0002.023 EE: -0000.023. Platoon:  No. Left On Road:  No. Created at 0000542.90 secs and taken off the road at 0000693.80 secs.>].>
+<Interaction ID       3: Code:   MM  . Start Time: 0575.1 secs, End Time: 0575.7 secs. Start Location: 00489.7 m, End Location: 00500.0 m. Extended= False. Road Users [<Road User ID      8: EastBound Motor Vehicle created at 00000.000 m, located off road at 00500.588 m, going 009.07 m/s, moving 00.91 m/tick. Length: 06.00 m, WE: 00500.588 EE: 00506.588. Platoon:  No. Left On Road:  No. Created at 0000521.10 secs and taken off the road at 0000576.30 secs.>, <Road User ID     10: WestBound Motor Vehicle created at 00500.000 m, located off road at -0000.436 m, going -10.65 m/s, moving -1.06 m/tick. Length: 06.00 m, WE: -0006.436 EE: -0000.436. Platoon:  No. Left On Road:  No. Created at 0000575.10 secs and taken off the road at 0000622.10 secs.>].>
+<Interaction ID       4: Code:  BM   . Start Time: 0588.9 secs, End Time: 0590.0 secs. Start Location: 00345.6 m, End Location: 00353.1 m. Extended= False. Road Users [<Road User ID     10: WestBound Motor Vehicle created at 00500.000 m, located off road at -0000.436 m, going -10.65 m/s, moving -1.06 m/tick. Length: 06.00 m, WE: -0006.436 EE: -0000.436. Platoon:  No. Left On Road:  No. Created at 0000575.10 secs and taken off the road at 0000622.10 secs.>, <Road User ID      9: WestBound Bicycle       created at 00500.000 m, located off road at -0000.023 m, going -03.31 m/s, moving -0.33 m/tick. Length: 02.00 m, WE: -0002.023 EE: -0000.023. Platoon:  No. Left On Road:  No. Created at 0000542.90 secs and taken off the road at 0000693.80 secs.>].>
+<Interaction ID       5: Code:  B M  . Start Time: 0638.6 secs, End Time: 0639.1 secs. Start Location: 00175.8 m, End Location: 00182.9 m. Extended= False. Road Users [<Road User ID     11: EastBound Motor Vehicle created at 00000.000 m, located off road at 00500.187 m, going 011.80 m/s, moving 01.18 m/tick. Length: 06.00 m, WE: 00500.187 EE: 00506.187. Platoon:  No. Left On Road:  No. Created at 0000623.70 secs and taken off the road at 0000666.10 secs.>, <Road User ID      9: WestBound Bicycle       created at 00500.000 m, located off road at -0000.023 m, going -03.31 m/s, moving -0.33 m/tick. Length: 02.00 m, WE: -0002.023 EE: -0000.023. Platoon:  No. Left On Road:  No. Created at 0000542.90 secs and taken off the road at 0000693.80 secs.>].>
+
+Road Users Log
+               Motor                                                           
+             Vehicles           Bicycles           Pedestrians           Totals
+EastBound       6                 0                   0                   6
+WestBound       6                 1                   0                   7
+Totals          12                1                   0                  13
+
+<Road User ID      0: WestBound Motor Vehicle created at 00500.000 m, located off road at -0000.340 m, going -08.73 m/s, moving -0.87 m/tick. Length: 06.00 m, WE: -0006.340 EE: -0000.340. Platoon:  No. Left On Road:  No. Created at 0000082.90 secs and taken off the road at 0000140.20 secs.>
+<Road User ID      1: WestBound Motor Vehicle created at 00500.000 m, located off road at -0000.679 m, going -09.70 m/s, moving -0.97 m/tick. Length: 06.00 m, WE: -0006.679 EE: -0000.679. Platoon:  No. Left On Road:  No. Created at 0000185.30 secs and taken off the road at 0000236.90 secs.>
+<Road User ID      2: WestBound Motor Vehicle created at 00500.000 m, located off road at -0000.341 m, going -09.35 m/s, moving -0.94 m/tick. Length: 06.00 m, WE: -0006.341 EE: -0000.341. Platoon:  No. Left On Road:  No. Created at 0000248.40 secs and taken off the road at 0000301.90 secs.>
+<Road User ID      3: EastBound Motor Vehicle created at 00000.000 m, located off road at 00500.408 m, going 009.89 m/s, moving 00.99 m/tick. Length: 06.00 m, WE: 00500.408 EE: 00506.408. Platoon:  No. Left On Road:  No. Created at 0000256.80 secs and taken off the road at 0000307.40 secs.>
+<Road User ID      4: WestBound Motor Vehicle created at 00500.000 m, located off road at -0000.731 m, going -10.89 m/s, moving -1.09 m/tick. Length: 06.00 m, WE: -0006.731 EE: -0000.731. Platoon:  No. Left On Road:  No. Created at 0000352.20 secs and taken off the road at 0000398.20 secs.>
+<Road User ID      5: EastBound Motor Vehicle created at 00000.000 m, located off road at 00500.491 m, going 010.49 m/s, moving 01.05 m/tick. Length: 06.00 m, WE: 00500.491 EE: 00506.491. Platoon:  No. Left On Road:  No. Created at 0000425.30 secs and taken off the road at 0000473.00 secs.>
+<Road User ID      6: EastBound Motor Vehicle created at 00000.000 m, located off road at 00500.984 m, going 010.27 m/s, moving 01.03 m/tick. Length: 06.00 m, WE: 00500.984 EE: 00506.984. Platoon:  No. Left On Road:  No. Created at 0000476.50 secs and taken off the road at 0000525.30 secs.>
+<Road User ID      7: EastBound Motor Vehicle created at 00000.000 m, located off road at 00500.482 m, going 009.76 m/s, moving 00.98 m/tick. Length: 06.00 m, WE: 00500.482 EE: 00506.482. Platoon:  No. Left On Road:  No. Created at 0000499.00 secs and taken off the road at 0000550.30 secs.>
+<Road User ID      8: EastBound Motor Vehicle created at 00000.000 m, located off road at 00500.588 m, going 009.07 m/s, moving 00.91 m/tick. Length: 06.00 m, WE: 00500.588 EE: 00506.588. Platoon:  No. Left On Road:  No. Created at 0000521.10 secs and taken off the road at 0000576.30 secs.>
+<Road User ID      9: WestBound Bicycle       created at 00500.000 m, located off road at -0000.023 m, going -03.31 m/s, moving -0.33 m/tick. Length: 02.00 m, WE: -0002.023 EE: -0000.023. Platoon:  No. Left On Road:  No. Created at 0000542.90 secs and taken off the road at 0000693.80 secs.>
+<Road User ID     10: WestBound Motor Vehicle created at 00500.000 m, located off road at -0000.436 m, going -10.65 m/s, moving -1.06 m/tick. Length: 06.00 m, WE: -0006.436 EE: -0000.436. Platoon:  No. Left On Road:  No. Created at 0000575.10 secs and taken off the road at 0000622.10 secs.>
+<Road User ID     11: EastBound Motor Vehicle created at 00000.000 m, located off road at 00500.187 m, going 011.80 m/s, moving 01.18 m/tick. Length: 06.00 m, WE: 00500.187 EE: 00506.187. Platoon:  No. Left On Road:  No. Created at 0000623.70 secs and taken off the road at 0000666.10 secs.>
+<Road User ID     12: WestBound Motor Vehicle created at 00500.000 m, located off road at 00048.853 m, going -09.32 m/s, moving -0.93 m/tick. Length: 06.00 m, WE: 00042.853 EE: 00048.853. Platoon:  No. Left On Road: Yes. Created at 0000671.50 secs and taken off the road at 0000720.00 secs.>
+
+Simulation finished at 2019-12-26 00:41:24.236433 . Program finished in 0.0437315 seconds.
