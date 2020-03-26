@@ -105,5 +105,71 @@ def volume():
     ax1.legend(['Bicycles', 'Pedestrians'])
     plt.show()
 
+def ped_split(split):
+    filename = "var_split%s.txt" % str(split)
+
+    os.system("python main_new.py -sd 1 -t 10 -c 0 -vp %d > %s" % (split, filename))
+    data = parseData(filename)
+    os.remove(filename)
+    interactions = data['MV_MV_P'] + data['MV_MV_B']
+    return (split, interactions/10)
+
+def bike_split(split):
+    filename = "var_split%s.txt" % str(split)
+
+    os.system("python main_new.py -sd 1 -t 10 -p 0 -vp %d > %s" % (split, filename))
+    data = parseData(filename)
+    os.remove(filename)
+    interactions = data['MV_MV_P'] + data['MV_MV_B']
+    return (split, interactions/10)
+
+def mv_split(split):
+    filename = "var_split%s.txt" % str(split)
+
+    os.system("python main_new.py -sd 1 -t 10 -vp %d > %s" % (split, filename))
+    data = parseData(filename)
+    os.remove(filename)
+    interactions = data['MV_MV_P'] + data['MV_MV_B']
+    return (split, interactions/10)
+
+def dir_split():
+    pool = mp.Pool()
+    results = [pool.apply_async(bike_split, args=[split]) for split in range(0, 110, 10)]
+    output = [p.get() for p in results]
+    pool.close()
+    
+    x_bikes = [m[0] for m in output]
+    y_bikes = [m[1] for m in output]
+
+    fig = plt.figure()
+    ax1 = fig.add_subplot()
+    ax1.set_xlabel("Percent of Motor Vehicles Traveling East")
+    ax1.set_ylabel("MVxMVxVRU Interactions/Hour")
+    ax1.set_title("Influence of Varying Directional Splits")
+    ax1.plot(x_bikes, y_bikes, 'b')
+
+    pool = mp.Pool()
+    results = [pool.apply_async(ped_split, args=[split]) for split in range(0, 110, 10)]
+    output = [p.get() for p in results]
+    pool.close()
+    
+    x_peds = [m[0] for m in output]
+    y_peds = [m[1] for m in output]
+
+    ax1.plot(x_peds, y_peds, 'r')
+
+    pool = mp.Pool()
+    results = [pool.apply_async(mv_split, args=[split]) for split in range(0, 110, 10)]
+    output = [p.get() for p in results]
+    pool.close()
+
+    x_mv = [m[0] for m in output]
+    y_mv = [m[1] for m in output]
+
+    ax1.plot(x_mv, y_mv, 'g')
+    ax1.legend(['Bicycles', 'Pedestrians', 'All'])
+
+    plt.show()
+
 if __name__ == '__main__':
-    volume()
+    dir_split()
