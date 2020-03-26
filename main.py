@@ -692,13 +692,13 @@ class RoadUserSource:
       minimum_gap:    the minimum time which must exist between the last and the next road user added to the road
       time_of_last:   time of the last road user which was added to the road
       time_of_next:   time of the next road user to be added to the road
-      headway_distr:  pointer to fcn which calculates part of the headway between successive road users - hardcoded now
+      arrival_distribution: flag for road user spacing set to 1 for neg exponential distribution, 0 for equal intervals
     """
 
     # this list is a container which allows iteration over all instances of the RoadUserSource class
     list_of_road_user_sources = []
 
-    def __init__(self, type, ru_per_hr, birth_locn, dirxn, speed, distr, len, mingap):
+    def __init__(self, type, ru_per_hr, birth_locn, dirxn, speed, distr, len, mingap, arrival_spacing):
 
         """Creates new instance of RoadUserSource and adds it to the list of road user sources
         """
@@ -711,7 +711,11 @@ class RoadUserSource:
         self.length = len
         self.minimum_gap = mingap
         self.time_of_last = clk.real_time()
-        self.time_of_next = self.time_of_last + self.minimum_gap + self.neg_exp(self.per_hour)
+        self.arrival_distribution = arrival_spacing
+        if self.arrival_distribution:
+            self.time_of_next = self.time_of_last + self.minimum_gap + self.neg_exp(self.per_hour)
+        else:
+            self.time_of_next = self.time_of_last + 1/self.per_hour * 3600
         # self.headway_distr = pointer to headway distribution, currently hardcoded to negative exponential
         # self.speed_distr = pointer to speed distribution - not implemented
         # add new instance to the list of instances
@@ -725,10 +729,14 @@ class RoadUserSource:
             type = 'Bicycle      '
         elif self.type == 'Pedestrian':
             type = 'Pedestrian   '
+        if self.arrival_distribution:
+            spacing = 'neg exponential distribution.'
+        else:
+            spacing = 'constant interval of ' + str(1/self.per_hour*3600) + ' seconds.'
 
         string = '<' + \
                     self.direction + ' ' + type + ' source at ' + '{:07.1f}'.format(self.birthplace) + \
-                    ' generating ' + '{:06.1f}'.format(self.per_hour) + ' road users/hour. ' + \
+                    ' generating ' + '{:06.1f}'.format(self.per_hour) + ' road users/hour using a ' + spacing + \
                     ' Speed = ' + '{:06.3f}'.format(self.nominal_speed) + ' m/s,' + \
                     ' Speed Distr = ' + '{:01.0f}'.format(self.speed_distr) + ' (0=fixed, 1=normal distribution),' + \
                     ' Length = ' + '{:04.1f}'.format(self.length) + ' m,' + \
@@ -758,7 +766,7 @@ class RoadUserSource:
             elif self.speed_distr == 1:                     # use a variable speed pulled from a distribution
                 if self.type == 'Motor Vehicle':
                     sigma = 1.11
-                    lower_bound = 2.235                     # lower bound for speed = 5 MPH
+                    lower_bound = 4.47                     # lower bound for speed = 10 MPH
                 elif self.type == 'Bicycle':
                     sigma = 2
                     lower_bound = 1.788                     # lower bound for speed = 4 MPH
@@ -776,11 +784,8 @@ class RoadUserSource:
                     mu = self.nominal_speed - sigma             # calculate mean using symmetry of 85 and 15 %ile
                     instance_speed = random.gauss(mu, sigma)
                 # print("Speed for the", self.direction, self.type, "is", instance_speed, "m/s, lower bound is", lower_bound)
-
             else:
                 print("problem with speed distribution value in add_new_road_users, value incorrect")
-            # print(clk.real_time(), 'secs:', self.direction, self.type, 'speed = ', instance_speed, 'm/s, created at',
-            #       self.birthplace, '. Next one due at', self.time_of_next, 'seconds.')
 
             # For MVs only, convert speed to an appropriate headway (in seconds) to the next MV.
             # headway is the distance from the front of a trailing vehicle to the front of a leading vehicle.
@@ -794,9 +799,12 @@ class RoadUserSource:
             else:
                 min_headway = 0
 
-            # set up time for next road user to be generated
+            # set time for next road user to be generated - use neg exponential distribution or equal intervals
             self.time_of_last = clk.real_time()
-            self.time_of_next = self.time_of_last + max(self.neg_exp(self.per_hour), min_headway)
+            if self.arrival_distribution:
+                self.time_of_next = self.time_of_last + max(self.neg_exp(self.per_hour), min_headway)
+            else:
+                self.time_of_next = self.time_of_last + 1/self.per_hour * 3600
 
             return RoadUser(self.type, self.birthplace, self.length, instance_speed, self.direction,
                             instance_speed*clk.time_per_tick())
@@ -1141,6 +1149,8 @@ class Test:
             "wait XX": waits XX seconds until processing the next test file command
             "set_ext_interaction_time XX": sets the extended interaction time to XX seconds
             "end_test": ends the test by setting clock equal to its end time
+            "print ru": prints list of OnRoad and OffRoad users
+            "print i": prints list of Active and Recorded interactions
             blank lines and comments are ignored. comments start with a pound sign and blank, '# '
     """
 
@@ -1179,6 +1189,8 @@ class Test:
             "del_all_road_users": moves all OnRoad road users to OffRoad status
             "wait XX": waits XX seconds until processing the next test file command
             "set_ext_interaction_time XX": sets the extended interaction time to XX seconds
+            "print ru": prints a list of OnRoad and OffRoad road users
+            "print i": prints a list of Active and Recorded interactions
             "end_test": ends test by setting clock equal to the end time
             blank lines and comments are ignored. comments start with a pound sign and blank, '# '
         """
@@ -1221,11 +1233,36 @@ class Test:
         elif cmd_list[0].startswith('set_ext_interaction_time'):
             RoadUser.set_extended_interaction_time(float(cmd_list[1]))
 
+        elif cmd_list[0].startswith('print'):
+            if cmd_list[1].startswith('ru'):
+                # print road users
+                print()
+                print("Road Users On Road")
+                for ru in RoadUser.OnRoad:
+                    print(ru)
+                print("Road Users Off Road")
+                for ru in RoadUser.OffRoad:
+                    print(ru)
+            elif cmd_list[1].startswith('i'):
+                # print interactions
+                print()
+                print("Active Interactions")
+                for ri in Interaction.active:
+                    print(ri)
+                print("Recorded Interactions")
+                for ri in Interaction.recorded:
+                    print(ri)
+            else:
+                # print parameter is unknown
+                print()
+                print('"', cmd, '" from test input file is unknown and is ignored')
+
         elif cmd_list[0].startswith('end_test'):
             clk.set_time(clk.end_time())
 
         else:
             # command is unknown
+            print()
             print('"', cmd, '" from test input file is unknown and is ignored')
 
 # END Test Class  ********************************************************************************************
@@ -1259,12 +1296,12 @@ def initialize_everything():
         westbound_mvs_per_hr =  args.mvhr  * (100 - args.mvsplit) * .01
 
         # create the sources of road users along the road
-        RoadUserSource('Pedestrian',    westbound_peds_per_hr, road.east_end(), 'WestBound', args.pedspeed, args.pedspeeddistr, 1.0, 0)
-        RoadUserSource('Bicycle',       westbound_cycs_per_hr, road.east_end(), 'WestBound', args.cycspeed, args.cycspeeddistr, 2.0, .5)
-        RoadUserSource('Motor Vehicle', westbound_mvs_per_hr,  road.east_end(), 'WestBound', args.mvspeed,  args.mvspeeddistr,  6.0, 1.5)
-        RoadUserSource('Pedestrian',    eastbound_peds_per_hr, road.west_end(), 'EastBound', args.pedspeed, args.pedspeeddistr, 1.0, 0)
-        RoadUserSource('Bicycle',       eastbound_cycs_per_hr, road.west_end(), 'EastBound', args.cycspeed, args.cycspeeddistr, 2.0, .5)
-        RoadUserSource('Motor Vehicle', eastbound_mvs_per_hr,  road.west_end(), 'EastBound', args.mvspeed,  args.mvspeeddistr,  6.0, 1.5)
+        RoadUserSource('Pedestrian',    westbound_peds_per_hr, road.east_end(), 'WestBound', args.pedspeed, args.pedspeeddistr, 1.0, 0, args.pedarrival)
+        RoadUserSource('Bicycle',       westbound_cycs_per_hr, road.east_end(), 'WestBound', args.cycspeed, args.cycspeeddistr, 2.0, .5, args.cycarrival)
+        RoadUserSource('Motor Vehicle', westbound_mvs_per_hr,  road.east_end(), 'WestBound', args.mvspeed,  args.mvspeeddistr,  6.0, 1.5, args.mvarrival)
+        RoadUserSource('Pedestrian',    eastbound_peds_per_hr, road.west_end(), 'EastBound', args.pedspeed, args.pedspeeddistr, 1.0, 0, args.pedarrival)
+        RoadUserSource('Bicycle',       eastbound_cycs_per_hr, road.west_end(), 'EastBound', args.cycspeed, args.cycspeeddistr, 2.0, .5, args.cycarrival)
+        RoadUserSource('Motor Vehicle', eastbound_mvs_per_hr,  road.west_end(), 'EastBound', args.mvspeed,  args.mvspeeddistr,  6.0, 1.5, args.mvarrival)
 
     if args.display != 0:
         window = Display(args.display)
@@ -1296,6 +1333,13 @@ if __name__ == '__main__':
     parser.add_argument("-vp", "--mvsplit",  type=int, default=50, help="specify % of vehicle volume traveling east,"
             "the remaining volume will travel west. range 0-100")
 
+    parser.add_argument("-ca", "--cycarrival",  type=int, default=0,    help="specify cyclist arrival spacing"
+            "(0=all cyclists arrive at equal intervals, 1=negative exponential distribution arrival)")
+    parser.add_argument("-pa", "--pedarrival",  type=int, default=0,    help="specify pedestrian arrival spacing"
+            "(0=all pedestrians arrive at equal intervals, 1=negative exponential distribution arrival)")
+    parser.add_argument("-va", "--mvarrival",   type=int, default=0,    help="specify vehicle arrival spacing"
+            "(0=all vehicles arrive at equal intervals, 1=negative exponential distribution arrival)")
+
     parser.add_argument("-cs", "--cycspeed",  type=float, default=5.3645,  help="specify cyclist speed (meters/second)")
     parser.add_argument("-ps", "--pedspeed",  type=float, default=1.3411,  help="specify ped speed (meters/second)")
     parser.add_argument("-vs", "--mvspeed",   type=float, default=11.176,  help="specify vehicle speed (meters/second)")
@@ -1310,9 +1354,9 @@ if __name__ == '__main__':
     parser.add_argument("-d",  "--display",   type=int,   default=0,       help="specify display level: 0 (no display)"
                                                                                " to 9 (display all)")
     # a nonzero value should only be used for the seed when repeatable results are needed (for testing)
-    parser.add_argument("-sd", "--seed",      type=int,   default=0,    help="specify value of randomization seed"
+    parser.add_argument("-sd", "--seed",      type=int,   default=1,    help="specify value of randomization seed"
             "a value of 0 allows 'true' randomization, a nonzero value used as seed provides repeatable results")
-    parser.add_argument("-te", "--test",      type=bool,  default=False,   help="true for automated test, else false"
+    parser.add_argument("-te", "--test",      type=bool,  default=True,   help="true for automated test, else false"
             "testing takes commands from a file called test file.txt.")
     args = parser.parse_args()
 
@@ -1337,6 +1381,9 @@ if __name__ == '__main__':
     print('ped % split:      ', args.pedsplit, '% of pedestrian volume heading east')
     print('bike % split:     ', args.cycsplit, '% of bike volume heading east')
     print('MV % split:       ', args.mvsplit, '% of motor vehicle volume heading east')
+    print('ped arrival distr:  ', args.pedarrival, '0 = equal intervals, 1 = negative exponential distribution')
+    print('bike arrival distr: ', args.cycarrival, '0 = equal intervals, 1 = negative exponential distribution')
+    print('MV arrival distr:   ', args.mvarrival, '0 = equal intervals, 1 = negative exponential distribution')
     print('ped speed:        ', args.pedspeed, 'meters/second')
     print('bike speed:       ', args.cycspeed, 'meters/second')
     print('MV speed:         ', args.mvspeed, 'meters/second')

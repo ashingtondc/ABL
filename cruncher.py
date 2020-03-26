@@ -42,6 +42,24 @@ def test_helper_user_vols(num, max_c):
 
     return (peds, bikes, cars)
 
+def test_helper_speeds(num, max_c):
+    filename = "speeds" + str(num+1) + ".txt"
+    os.system("python main.py -c 50 -p 50 > " + filename)
+    data = parseData(filename)
+    os.remove(filename)
+
+    ped_speeds = []
+    bike_speeds = []
+    veh_speeds = []
+    for user in data['road_users']['list']:
+        if user['type'] == 'Pedestrian':
+            ped_speeds.append(abs(user['velocity']))
+        elif user['type'] == 'Bicycle':
+            bike_speeds.append(abs(user['velocity']))
+        else:
+            veh_speeds.append(abs(user['velocity']))
+    
+    return (ped_speeds, bike_speeds, veh_speeds)
 
 def test_helper_dir_vol_split(num, max_c):
     filename = "vols" + str(num+1) + ".txt"

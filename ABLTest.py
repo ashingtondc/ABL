@@ -1,6 +1,7 @@
 import sys
 import os
 import main
+import matplotlib.pyplot as plt
 from parse import parseData, extract_nums
 import unittest
 from scipy import stats
@@ -94,6 +95,7 @@ class TestUniqueIDs(unittest.TestCase):
         users = data['road_users']['list']
         last = None
         count = 0
+        # Check user IDs
         for user in users:
             if last == None:
                 last = user['id']
@@ -135,8 +137,27 @@ class TestSpeeds(unittest.TestCase):
                 self.assertTrue(user['velocity'] > 0)
             else:
                 self.assertTrue(user['velocity'] < 0)
-    
+    # Checks normal distribution
+    # Pedestrian speeds fails
     def test_distributions(self):
+        data = crunch(5, test_helper_speeds)
+        ped_speeds = []
+        bike_speeds = []
+        veh_speeds = []
+        for grp in data:
+            ped_speeds.extend(grp[0])
+            bike_speeds.extend(grp[1])
+            veh_speeds.extend(grp[2])
+        # Test pvalue for normal dist
+        pval = stats.normaltest(ped_speeds).pvalue
+        self.assertGreater(pval, 0.05, msg="Testing normal dist for ped speeds")
+        pval = stats.normaltest(bike_speeds).pvalue
+        self.assertGreater(pval, 0.05, msg="Testing normal dist for bike speeds")
+        pval = stats.normaltest(veh_speeds).pvalue
+        self.assertGreater(pval, 0.05, msg="Testing normal dist for car speeds")
+
+    # Old test replaced by above
+    def distributions(self):
         os.system("python main.py -c 50 -p 50 > test_speeds.txt")
         data = parseData("test_speeds.txt")
         ped_speeds = []
@@ -149,6 +170,14 @@ class TestSpeeds(unittest.TestCase):
                 bike_speeds.append(abs(user['velocity']))
             else:
                 veh_speeds.append(abs(user['velocity']))
+        # Test pvalue for normal dist
+        pval = stats.normaltest(ped_speeds).pvalue
+        self.assertGreater(pval, 0.05, msg="Testing normal dist for ped speeds")
+        pval = stats.normaltest(bike_speeds).pvalue
+        self.assertGreater(pval, 0.05, msg="Testing normal dist for ped speeds")
+        pval = stats.normaltest(veh_speeds).pvalue
+        self.assertGreater(pval, 0.05, msg="Testing normal dist for ped speeds")
+        # Check median
         self.assertAlmostEqual(data['ped_speed'], statistics.median(ped_speeds), delta=2)
         self.assertAlmostEqual(data['bike_speed'], statistics.median(bike_speeds), delta=2)
         self.assertAlmostEqual(data['mv_speed'], statistics.median(veh_speeds), delta=2)
@@ -169,11 +198,10 @@ class TestLocations(unittest.TestCase):
                     src = source
             self.assertAlmostEqual(src['location'], user['create_pos'], delta=1, msg="Failed: Road User ID: " + str(user['id']))
 
-# These need to be re-written to use a normal distribution of sample means
 class TestVols(unittest.TestCase):
     # Test the directional split
-    # Disabled because it takes a while
     def test_dir_split(self):
+        # Run simulation 30 times and aggregate data
         data = crunch(30, test_helper_dir_vol_split)
 
         peds = [item[0] for item in data]
@@ -195,6 +223,7 @@ class TestVols(unittest.TestCase):
 
     # See if we are producing the right amount of users per hour
     def test_user_vols(self):
+        # Run simulation 30 times and aggregate data
         data = crunch(30, test_helper_user_vols)
         peds = [item[0] for item in data]
         bikes = [item[1] for item in data]
@@ -247,12 +276,15 @@ class TestPlatooning(unittest.TestCase):
         for user in users:
             if user['platoon']:
                 self.assertTrue(user['type'] == "Motor Vehicle")
+
+# This follows a Poisson distribution. Need to do more research on how to eval
 class TestPhaseOne(unittest.TestCase):
     # Test predicted total interactions/hour
-    # Disabled due to it taking too long
     def test_one(self):
+        # Run simulation 30 times and aggregate data
         data = crunch(50, test_helper_ph1)
         pval = stats.normaltest(data).pvalue
+
         self.assertGreater(pval, 0.05, msg="Enough evidence to reject null hypothesis that the data follows a normal distribution")
         pred_meetings = ((0.5 * 50)**2) * (1000/11.176) / 1800
         median = statistics.median(data)
@@ -263,6 +295,7 @@ class TestPhaseOne(unittest.TestCase):
         data = parseData("test_phase1.txt")
         pred_meetings = ((25/3600) / data['mv_speed'] * data['road_length']) + ((25/3600) * (data['road_length'] / data['mv_speed']))
         counts = []
+        # For each user, count the number of interactions they were involved in
         for user in data['road_users']['list']:
             count = 0
             for event in data['interactions']:
@@ -270,6 +303,8 @@ class TestPhaseOne(unittest.TestCase):
                     if user['id'] == participant['id']:
                         count += 1
             counts.append(count)
+
+        # Take the median of the counts, as that should be close to the prediction
         self.assertAlmostEqual(pred_meetings, statistics.median(counts), delta=0.5)
 
 if __name__ == '__main__': 
