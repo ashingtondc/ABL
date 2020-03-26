@@ -36,7 +36,7 @@ def speed():
 def length_helper(length):
     filename = "var_length%s.txt" % str(length)
 
-    os.system("python main_new.py -t 10 -r %d > %s" % (length, filename))
+    os.system("python main_new.py -t 10 -p 0 -r %d > %s" % (length, filename))
     data = parseData(filename)
     os.remove(filename)
     interactions = data['MV_MV_P'] + data['MV_MV_B']
@@ -59,5 +59,51 @@ def length():
     ax1.plot(x, y)
     plt.show()
 
+def bike_vol(vol):
+    filename = "var_volume%s.txt" % str(vol)
+
+    os.system("python main_new.py -t 10 -p 0 -c %d > %s" % (vol, filename))
+    data = parseData(filename)
+    os.remove(filename)
+    interactions = data['MV_MV_P'] + data['MV_MV_B']
+    return (vol, interactions/10)
+
+def ped_vol(vol):
+    filename = "var_volume%s.txt" % str(vol)
+
+    os.system("python main_new.py -t 10 -c 0 -p %d > %s" % (vol, filename))
+    data = parseData(filename)
+    os.remove(filename)
+    interactions = data['MV_MV_P'] + data['MV_MV_B']
+    return (vol, interactions/10)
+
+def volume():
+    pool = mp.Pool()
+    results = [pool.apply_async(bike_vol, args=[vol]) for vol in range(5, 65, 5)]
+    output = [p.get() for p in results]
+    pool.close()
+    
+    x_bikes = [m[0] for m in output]
+    y_bikes = [m[1] for m in output]
+
+    fig = plt.figure()
+    ax1 = fig.add_subplot()
+    ax1.set_xlabel("VRU Volume/HR")
+    ax1.set_ylabel("MVxMVxVRU Interactions/Hour")
+    ax1.set_title("Influence of Varying VRU Volumes")
+    ax1.plot(x_bikes, y_bikes, 'b')
+
+    pool = mp.Pool()
+    results = [pool.apply_async(ped_vol, args=[vol]) for vol in range(5, 65, 5)]
+    output = [p.get() for p in results]
+    pool.close()
+    
+    x_peds = [m[0] for m in output]
+    y_peds = [m[1] for m in output]
+
+    ax1.plot(x_peds, y_peds, 'r')
+    ax1.legend(['Bicycles', 'Pedestrians'])
+    plt.show()
+
 if __name__ == '__main__':
-    length()
+    volume()
