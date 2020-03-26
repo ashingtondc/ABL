@@ -1382,17 +1382,17 @@ if __name__ == '__main__':
     parser.add_argument('-pp', '--pedsplit', type=int, default=50, help='specify %% of pedestrian volume traveling east, the remaining volume will travel west. range 0-100.')
     parser.add_argument('-vp', '--mvsplit', type=int, default=50, help='specify %% of vehicle volume traveling east, the remaining volume will travel west. range 0-100.')
 
-    parser.add_argument('-ca', '--cycarrival', type=int, default=0, help='specify cyclist arrival spacing (0=all cyclists arrive at equal intervals, 1=negative exponential distribution arrival).')
-    parser.add_argument('-pa', '--pedarrival', type=int, default=0, help='specify pedestrian arrival spacing (0=all pedestrians arrive at equal intervals, 1=negative exponential distribution arrival).')
-    parser.add_argument('-va', '--mvarrival', type=int, default=0, help='specify vehicle arrival spacing (0=all vehicles arrive at equal intervals, 1=negative exponential distribution arrival).')
+    parser.add_argument('-ca', '--cycarrival', type=int, default=1, help='specify cyclist arrival spacing (0=all cyclists arrive at equal intervals, 1=negative exponential distribution arrival).')
+    parser.add_argument('-pa', '--pedarrival', type=int, default=1, help='specify pedestrian arrival spacing (0=all pedestrians arrive at equal intervals, 1=negative exponential distribution arrival).')
+    parser.add_argument('-va', '--mvarrival', type=int, default=1, help='specify vehicle arrival spacing (0=all vehicles arrive at equal intervals, 1=negative exponential distribution arrival).')
 
     parser.add_argument('-cs', '--cycspeed', type=float, default=5.3645, help='specify cyclist speed in meters/second.')
     parser.add_argument('-ps', '--pedspeed', type=float, default=1.3411, help='specify ped speed in meters/second.')
     parser.add_argument('-vs', '--mvspeed', type=float, default=11.176, help='specify vehicle speed in meters/second.')
 
-    parser.add_argument('-cd', '--cycspeeddistr', type=int, default=0, help='specify cyclist speed distribution (0=all cyclists travel at cycspeed, 1=normal distribution with 85th percentile at cycspeed value).')
-    parser.add_argument('-pd', '--pedspeeddistr', type=int, default=0, help='specify pedestrian speed distribution (0=all pedestrians travel at pedspeed, 1=normal distribution with 85th percentile at pedspeed value).')
-    parser.add_argument('-vd', '--mvspeeddistr', type=int, default=0, help='specify vehicle speed distribution (0=all vehicles travel at mvspeed, 1=normal distribution with 85th percentile at mvspeed value).')
+    parser.add_argument('-cd', '--cycspeeddistr', type=int, default=1, help='specify cyclist speed distribution (0=all cyclists travel at cycspeed, 1=normal distribution with 85th percentile at cycspeed value).')
+    parser.add_argument('-pd', '--pedspeeddistr', type=int, default=1, help='specify pedestrian speed distribution (0=all pedestrians travel at pedspeed, 1=normal distribution with 85th percentile at pedspeed value).')
+    parser.add_argument('-vd', '--mvspeeddistr', type=int, default=1, help='specify vehicle speed distribution (0=all vehicles travel at mvspeed, 1=normal distribution with 85th percentile at mvspeed value).')
 
     parser.add_argument('-d', '--display', type=int, default=1, help='specify a display level from 0 to 9.\n' + \
                         '0 = display only the number and rate of interactions\n' + \
