@@ -9,10 +9,10 @@ import statistics
 
 def speed_helper(speed):
     filename = "var_speed%s.txt" % str(speed)
-
-    os.system("python main_new.py -r 1000 -t 10 -vs %d > %s" % (speed, filename))
+    # print(speed)
+    os.system("python main_new.py -r 1620 -t 500 -c 0 -vs %d > %s" % (speed, filename))
     data = parseData(filename)
-    os.remove(filename)
+    # os.remove(filename)
     interactions = data['MV_MV_P'] + data['MV_MV_B']
     return (speed, interactions/10)
 
@@ -172,4 +172,4 @@ def dir_split():
     plt.show()
 
 if __name__ == '__main__':
-    dir_split()
+    speed()
