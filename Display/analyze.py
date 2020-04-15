@@ -5,16 +5,17 @@ import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 import multiprocessing as mp
 import statistics
+import datetime as dt
 
 
 def speed_helper(speed):
     filename = "var_speed%s.txt" % str(speed)
     # print(speed)
-    os.system("python main_new.py -r 1620 -t 500 -c 0 -vs %d > %s" % (speed, filename))
+    os.system("python main_new.py -r 1620 -t 1000 -c 0 -vs %d > %s" % (speed, filename))
     data = parseData(filename)
-    # os.remove(filename)
+    os.remove(filename)
     interactions = data['MV_MV_P'] + data['MV_MV_B']
-    return (speed, interactions/10)
+    return (speed, interactions/1000)
 
 def speed():
     pool = mp.Pool()
@@ -22,16 +23,24 @@ def speed():
     output = [p.get() for p in results]
     pool.close()
     
-    x = [m[0] for m in output]
+    x = [m[0] * 2.237 for m in output]
     y = [m[1] for m in output]
-
-    fig = plt.figure()
+    end = dt.datetime.now()
+    fig = plt.figure(figsize=(8, 6))
     ax1 = fig.add_subplot()
-    ax1.set_xlabel("MV Speed (m/s)")
+    ax1.set_xlabel("Miles per Hour")
     ax1.set_ylabel("MVxMVxVRU Interactions/Hour")
-    ax1.set_title("Influence of Varying Motor Vehicle Speeds")
     ax1.plot(x, y)
+
+    # KM/HR Axis
+    left, right = ax1.get_xlim()
+    ax2 = ax1.twiny()
+    ax2.set_xlim(left * 1.609, right * 1.609)
+    ax2.set_xlabel("Kilometers per Hour")
+
+    ax2.set_title("Influence of Varying Motor Vehicle Speeds")
     plt.show()
+    return end
 
 def length_helper(length):
     filename = "var_length%s.txt" % str(length)
@@ -172,4 +181,6 @@ def dir_split():
     plt.show()
 
 if __name__ == '__main__':
-    speed()
+    start = dt.datetime.now()
+    end = speed()
+    print(end - start)
