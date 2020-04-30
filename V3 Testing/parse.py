@@ -1,6 +1,7 @@
 import sys
 import re
 import json
+import ast
 
 def main():
     if len(sys.argv) != 3:
@@ -29,7 +30,7 @@ def parseData(filename):
         line = file.readline()
         # Command line parameter values
         while not line.isspace():
-            # print(line)
+            print(line)
             param = re.search("^[^:]+", line)
             param = param.group().replace(" ", "_")
             param = param.lower()
@@ -101,6 +102,8 @@ def parseData(filename):
             }
             code = re.search("Code:(.*?)\.", line).group(1).replace(" ", "")
             extended = re.search("Extended= *(\w*) *\.", line)
+            critical = re.search("Critical= *(\w*) *\.", line)
+            critical_users = re.search("Critical Road Users= *(\[\d+, \d+\]) *\.", line)
             road_users = []
             extract_road_users(road_users, line)
             vals = extract_nums(line)
@@ -111,7 +114,9 @@ def parseData(filename):
             interaction['end_time'] = vals[2]
             interaction['start_loc'] = vals[3]
             interaction['end_loc'] = vals[4]
-            interaction['extended'] = bool(extended.group(1))
+            interaction['extended'] = boolean(extended.group(1))
+            interaction['critical'] = boolean(critical.group(1))
+            interaction['critical_users'] = ast.literal_eval(critical_users.group(1))
             interaction['road_users'] = road_users
             interactions.append(interaction)
 
@@ -230,6 +235,9 @@ def parseData(filename):
         info['MV_MV_P'] = ped
 
     return info
+
+def boolean(item):
+    return item == "True"
 
 def extract_nums(line):
     vals = re.findall("\s?-?\d+\.?\d*\s?", line)

@@ -1453,13 +1453,13 @@ if __name__ == '__main__':
     # the command line parsing logic has NOT been (officially) tested!
     # get command line parameter values
     parser = argparse.ArgumentParser(description='Simulate an ABL and count road user interactions.')
-    parser.add_argument('-r', '--roadlen', type=int, default=1609, help='specify road length in meters.')
-    parser.add_argument('-t', '--time', type=float, default=10.0, help='specify simulation duration in hours.')
-    parser.add_argument('-it', '--iaxntime', type=float, default=12.0, help='specify MVxMV interaction in seconds.')
+    parser.add_argument('-r', '--roadlen', type=int, default=1000, help='specify road length in meters.')
+    parser.add_argument('-t', '--time', type=float, default=1, help='specify simulation duration in hours.')
+    parser.add_argument('-it', '--iaxntime', type=float, default=2.0, help='specify MVxMV interaction in seconds.')
 
-    parser.add_argument('-c', '--cychr', type=int, default=60, help='specify # of cyclists per hour.')
-    parser.add_argument('-p', '--pedhr', type=int, default=60, help='specify # of pedestrians per hour.')
-    parser.add_argument('-v', '--mvhr', type=int, default=100, help='specify # of motor vehicles per hour, range 0-3600.')
+    parser.add_argument('-c', '--cychr', type=int, default=20, help='specify # of cyclists per hour.')
+    parser.add_argument('-p', '--pedhr', type=int, default=10, help='specify # of pedestrians per hour.')
+    parser.add_argument('-v', '--mvhr', type=int, default=60, help='specify # of motor vehicles per hour, range 0-3600.')
 
     parser.add_argument('-cp', '--cycsplit', type=int, default=50, help='specify %% of cyclist volume traveling east, the remaining volume will travel west. range 0-100.')
     parser.add_argument('-pp', '--pedsplit', type=int, default=50, help='specify %% of pedestrian volume traveling east, the remaining volume will travel west. range 0-100.')
@@ -1482,9 +1482,9 @@ if __name__ == '__main__':
                         '1 = display the detailed interaction and road user information created in the simulation\n' +
                         '2 = display the graphical representation of the simulation while running\n' +
                         '9 = display all current debug information during the simulation run.')
-    parser.add_argument('-sd', '--seed', type=int, default=1, help='specify value of randomization seed (a value of 0 allows true randomization, a nonzero value used as seed provides repeatable results).')
+    parser.add_argument('-sd', '--seed', type=int, default=0, help='specify value of randomization seed (a value of 0 allows true randomization, a nonzero value used as seed provides repeatable results).')
     parser.add_argument('-te', '--test', default=False, action="store_true", help='include this parameter for automated test, else omit it. Automated tests take commands from a file called "test file.txt".')
-    parser.add_argument('-o', '--outfile', default=True, action="store_true", help='include this parameter to enable output to "mcsim output.txt" for use by Double Check.')
+    parser.add_argument('-o', '--outfile', default=False, action="store_true", help='include this parameter to enable output to "mcsim output.txt" for use by Double Check.')
     args = parser.parse_args()
 
     initialize_everything()
