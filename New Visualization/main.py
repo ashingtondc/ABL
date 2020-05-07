@@ -135,9 +135,16 @@ class Display:
             pygame.display.set_caption('Simulation')
             clock = pygame.time.Clock()
             self.pixel_per_meters_wide = Display.width/road.length()
-            self.mv_icon =   pygame.image.load('tinycar.jpg')
-            self.bike_icon = pygame.image.load('tinybike.jpg')
-            self.ped_icon =  pygame.image.load('tinyped.jpg')
+            self.mv_icon =   pygame.transform.scale(pygame.image.load('car.png'), (150, 68))
+            # self.mv_icon = pygame.image.load('tinycar.jpg')
+            self.bike_icon =   pygame.transform.scale(pygame.image.load('bike1.png'), (75, 40))
+            # self.bike_icon = pygame.image.load('tinybike.jpg')
+            self.ped_icon = [
+                pygame.transform.scale(pygame.image.load('person1.png'), (60, 60)),
+                pygame.transform.scale(pygame.image.load('person2.png'), (60, 60)),
+                pygame.transform.scale(pygame.image.load('person3.png'), (60, 60)),
+                pygame.transform.scale(pygame.image.load('person4.png'), (60, 60)),
+            ]
 
     def update(self):
         """ This function updates the simulation display at every loop through the simulation
@@ -151,7 +158,10 @@ class Display:
 
             #  paint the road users onto the road
             for ru in RoadUser.OnRoad:
-                Display.paint_icon(self, ru.type(), ru.direction(), ru.location())
+                if ru._platooned:
+                    Display.paint_icon(self, ru.type(), ru.direction(), ru.location())
+                else:
+                    Display.paint_icon(self, ru.type(), ru.direction(), ru.location())
 
             # paint the interactions onto the road users - wanted them to be slightly transparent
             if self._display_level > 1:
@@ -183,19 +193,19 @@ class Display:
             self.paint_icon_in_lane(self.mv_icon, 2, locn)
         elif type == 'Motor Vehicle' and dirxn == 'EastBound':
             # icon = MV
-            self.paint_icon_in_lane(self.mv_icon, 3, locn)
+            self.paint_icon_in_lane(pygame.transform.flip(self.mv_icon, True, False), 3.4, locn)
         elif type == 'Bicycle' and dirxn == 'WestBound':
             # icon = bike
-            self.paint_icon_in_lane(self.bike_icon, 1, locn)
+            self.paint_icon_in_lane(pygame.transform.flip(self.bike_icon, True, False), 1.15, locn)
         elif type == 'Bicycle' and dirxn == 'EastBound':
             # icon = bike
-            self.paint_icon_in_lane(self.bike_icon, 4, locn)
+            self.paint_icon_in_lane(self.bike_icon, 4.5, locn)
         elif type == 'Pedestrian' and dirxn == 'WestBound':
             # icon = ped
-            self.paint_icon_in_lane(self.ped_icon, 0, locn)
+            self.paint_icon_in_lane(self.ped_icon[int(time.time() * 2) % 4], 0.5, locn)
         elif type == 'Pedestrian' and dirxn == 'EastBound':
             # icon = ped
-            self.paint_icon_in_lane(self.ped_icon, 5, locn)
+            self.paint_icon_in_lane(self.ped_icon[int(time.time() * 2) % 4], 5, locn)
         else:  # type/direction combo is unknown
             pass
 
