@@ -141,7 +141,7 @@ class TestSpeeds(unittest.TestCase):
     # Checks normal distribution
     # Pedestrian speeds fails
     def test_distributions(self):
-        data = crunch(5, test_helper_speeds)
+        data = crunch(16, test_helper_speeds)
         ped_speeds = []
         bike_speeds = []
         veh_speeds = []
@@ -151,9 +151,9 @@ class TestSpeeds(unittest.TestCase):
             veh_speeds.extend(grp[2])
         # Test pvalue for normal dist
         pval = stats.normaltest(ped_speeds).pvalue
-        # self.assertGreater(pval, 0.05, msg="Testing normal dist for ped speeds")
+        self.assertGreater(pval, 0.05, msg="Testing normal dist for ped speeds")
         pval = stats.normaltest(bike_speeds).pvalue
-        # self.assertGreater(pval, 0.05, msg="Testing normal dist for bike speeds")
+        self.assertGreater(pval, 0.05, msg="Testing normal dist for bike speeds")
         pval = stats.normaltest(veh_speeds).pvalue
         self.assertGreater(pval, 0.05, msg="Testing normal dist for car speeds")
 

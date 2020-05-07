@@ -44,7 +44,7 @@ def test_helper_user_vols(num, max_c):
 
 def test_helper_speeds(num, max_c):
     filename = "speeds" + str(num+1) + ".txt"
-    os.system("python main.py -c 50 -p 50 > " + filename)
+    os.system("python main.py -c 50 -p 50 -cs 50 -ps 10 -vs 110 > " + filename)
     data = parseData(filename)
     os.remove(filename)
 
