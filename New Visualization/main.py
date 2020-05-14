@@ -135,7 +135,7 @@ class Display:
             pygame.display.set_caption('Simulation')
             clock = pygame.time.Clock()
             self.pixel_per_meters_wide = Display.width/road.length()
-            self.mv_icon =   pygame.transform.scale(pygame.image.load('car.png'), (150, 68))
+            self.mv_icon =   pygame.transform.scale(pygame.image.load('car.png'), (30, 65))
             # self.mv_icon = pygame.image.load('tinycar.jpg')
             self.bike_icon =   pygame.transform.scale(pygame.image.load('bike1.png'), (75, 40))
             # self.bike_icon = pygame.image.load('tinybike.jpg')
@@ -166,7 +166,9 @@ class Display:
             # paint the interactions onto the road users - wanted them to be slightly transparent
             if self._display_level > 1:
                 for ai in Interaction.active:
-                    Display.paint_interaction_box(self, ai.west_end(), ai.east_end())
+                    bounds = self.get_inter_box_height(ai)
+                    print(bounds)
+                    Display.paint_interaction_box(self, ai.west_end(), ai.east_end(), bounds[0], bounds[1])
 
             pygame.display.update()
 
@@ -174,7 +176,33 @@ class Display:
             if len(Interaction.active) != 0 and self._display_level > 2:
                 time.sleep(.3)
 
-    def paint_interaction_box(self, west_end, east_end):
+    def get_inter_box_height(self, ai):
+        road_users = ai._parties
+        top = 0
+        bottom = 0
+        vals = []
+        for user in road_users:
+            if user._type == "Motor Vehicle":
+                top = 236
+                bottom = 360
+            elif user._type == "Bicycle":
+                top = 168
+                bottom = 236
+            else:
+                top = 112
+                bottom = 168
+            if user._direction == "EastBound":
+                top, bottom = bottom, top
+                top = 720 - top
+                bottom = 720 - bottom
+                
+            vals.append(top)
+            vals.append(bottom)
+        top = min(vals)
+        bottom = max(vals) - top
+        return (top, bottom)
+
+    def paint_interaction_box(self, west_end, east_end, top, bottom):
         """ This function displays a box showing the boundaries of the intersection for all intersections
             To hide attributes better, the interaction should provide the icon via a method
         """
@@ -182,7 +210,7 @@ class Display:
         # turn west and east boundaries into pixel measurements, boxes drawn top to bottom
         west = west_end * self.pixel_per_meters_wide
         east = east_end * self.pixel_per_meters_wide
-        pygame.draw.rect(self.sim_display, Display.pink, (west, 0, east-west, Display.height), 0)
+        pygame.draw.rect(self.sim_display, Display.pink, (west, top, east-west, bottom), 0)
 
     def paint_icon(self, type, dirxn, locn):
         """ This function displays the appropriate icon for each road user
@@ -190,22 +218,23 @@ class Display:
         """
         # get the appropriate icon
         if type == 'Motor Vehicle' and dirxn == 'WestBound':
-            self.paint_icon_in_lane(self.mv_icon, 2, locn)
+            self.paint_icon_in_lane(pygame.transform.flip(self.mv_icon, False, False), 2, locn)
+
         elif type == 'Motor Vehicle' and dirxn == 'EastBound':
             # icon = MV
-            self.paint_icon_in_lane(pygame.transform.flip(self.mv_icon, True, False), 3.4, locn)
+            self.paint_icon_in_lane(pygame.transform.flip(self.mv_icon, False, False), 3.4, locn - 30)
         elif type == 'Bicycle' and dirxn == 'WestBound':
             # icon = bike
             self.paint_icon_in_lane(pygame.transform.flip(self.bike_icon, True, False), 1.15, locn)
         elif type == 'Bicycle' and dirxn == 'EastBound':
             # icon = bike
-            self.paint_icon_in_lane(self.bike_icon, 4.5, locn)
+            self.paint_icon_in_lane(self.bike_icon, 4.5, locn - 65)
         elif type == 'Pedestrian' and dirxn == 'WestBound':
             # icon = ped
             self.paint_icon_in_lane(self.ped_icon[int(time.time() * 2) % 4], 0.5, locn)
         elif type == 'Pedestrian' and dirxn == 'EastBound':
             # icon = ped
-            self.paint_icon_in_lane(self.ped_icon[int(time.time() * 2) % 4], 5, locn)
+            self.paint_icon_in_lane(self.ped_icon[int(time.time() * 2) % 4], 5, locn - 36)
         else:  # type/direction combo is unknown
             pass
 
