@@ -149,12 +149,28 @@ class Display:
     def update(self):
         """ This function updates the simulation display at every loop through the simulation
         """
+
+        # This bit is necessary to prevent the window from freezing when clicked
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: ## defined in pygame.locals
+                pygame.quit()
+                sys.exit()
+
         if self._display_level != 0:
             # blank the screen
             # self.sim_display.fill(Display.white)
             self.sim_display.blit(self.background, (0, 0)) 
             # paint the road
             Display.paint_road(self, road.length())
+
+            
+
+            # paint the interactions onto the road users - wanted them to be slightly transparent
+            if self._display_level > 1:
+                for ai in Interaction.active:
+                    bounds = self.get_inter_box_height(ai)
+                    print(bounds)
+                    Display.paint_interaction_box(self, ai.west_end(), ai.east_end(), bounds[0], bounds[1])
 
             #  paint the road users onto the road
             for ru in RoadUser.OnRoad:
@@ -163,12 +179,6 @@ class Display:
                 else:
                     Display.paint_icon(self, ru.type(), ru.direction(), ru.location())
 
-            # paint the interactions onto the road users - wanted them to be slightly transparent
-            if self._display_level > 1:
-                for ai in Interaction.active:
-                    bounds = self.get_inter_box_height(ai)
-                    print(bounds)
-                    Display.paint_interaction_box(self, ai.west_end(), ai.east_end(), bounds[0], bounds[1])
 
             pygame.display.update()
 
