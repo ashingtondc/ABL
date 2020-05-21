@@ -120,6 +120,13 @@ class Display:
     blue = (0, 0, 255)
     darkBlue = (0, 0, 128)
     pink = (255, 200, 200)
+    orange = (255,140,0)
+    seagreen = (32,178,170)
+    yellow = (255,215,0)
+    indigo = (75,0,130)
+    purple = (147,112,219)
+    magenta = (255,0,255)
+
 
     def __init__(self, display_level):
         """ initialize all objects and variables involved with the display of the simulation
@@ -146,6 +153,12 @@ class Display:
                 pygame.transform.scale(pygame.image.load('person4.png'), (60, 60)),
             ]
 
+            # Color management
+            self.intxn_colors = {} # interaction id mapped to color
+            self.color_queue = [Display.pink, Display.red, Display.orange, Display.yellow, Display.green, Display.seagreen, Display.blue, Display.indigo, Display.purple, Display.magenta]
+            self.num_colors = len(self.color_queue)
+            self.color_index = 0
+
     def update(self):
         """ This function updates the simulation display at every loop through the simulation
         """
@@ -169,8 +182,8 @@ class Display:
             if self._display_level > 1:
                 for ai in Interaction.active:
                     bounds = self.get_inter_box_height(ai)
-                    print(bounds)
-                    Display.paint_interaction_box(self, ai.west_end(), ai.east_end(), bounds[0], bounds[1])
+                    color = self.get_inter_color(ai._ID)
+                    Display.paint_interaction_box(self, ai.west_end(), ai.east_end(), color, bounds[0], bounds[1])
 
             #  paint the road users onto the road
             for ru in RoadUser.OnRoad:
@@ -212,7 +225,18 @@ class Display:
         bottom = max(vals) - top
         return (top, bottom)
 
-    def paint_interaction_box(self, west_end, east_end, top, bottom):
+    def get_inter_color(self, intxn_id):
+        if intxn_id in self.intxn_colors:
+            return self.intxn_colors[intxn_id]
+        else:
+            color = self.color_queue[self.color_index]
+            self.intxn_colors[intxn_id] = color
+            self.color_index += 1
+            if self.color_index == self.num_colors:
+                self.color_index = 0
+            return color
+
+    def paint_interaction_box(self, west_end, east_end, color, top, bottom):
         """ This function displays a box showing the boundaries of the intersection for all intersections
             To hide attributes better, the interaction should provide the icon via a method
         """
@@ -220,7 +244,7 @@ class Display:
         # turn west and east boundaries into pixel measurements, boxes drawn top to bottom
         west = west_end * self.pixel_per_meters_wide
         east = east_end * self.pixel_per_meters_wide
-        pygame.draw.rect(self.sim_display, Display.pink, (west, top, east-west, bottom), 0)
+        pygame.draw.rect(self.sim_display, color, (west, top, east-west, bottom), 4)
 
     def paint_icon(self, type, dirxn, locn):
         """ This function displays the appropriate icon for each road user
