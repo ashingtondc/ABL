@@ -127,6 +127,8 @@ class Display:
     purple = (147,112,219)
     magenta = (255,0,255)
 
+    ext_iaxn_display = 0
+
 
     def __init__(self, display_level):
         """ initialize all objects and variables involved with the display of the simulation
@@ -162,7 +164,7 @@ class Display:
     def update(self):
         """ This function updates the simulation display at every loop through the simulation
         """
-
+        show_interaction = False
         # This bit is necessary to prevent the window from freezing when clicked
         for event in pygame.event.get():
             if event.type == pygame.QUIT: ## defined in pygame.locals
@@ -181,9 +183,11 @@ class Display:
             # paint the interactions onto the road users - wanted them to be slightly transparent
             if self._display_level > 1:
                 for ai in Interaction.active:
-                    bounds = self.get_inter_box_height(ai)
-                    color = self.get_inter_color(ai._ID)
-                    Display.paint_interaction_box(self, ai.west_end(), ai.east_end(), color, bounds[0], bounds[1])
+                    if self.ext_iaxn_display == 0 or ai._critical:
+                        bounds = self.get_inter_box_height(ai)
+                        color = self.get_inter_color(ai._ID)
+                        Display.paint_interaction_box(self, ai.west_end(), ai.east_end(), color, bounds[0], bounds[1])
+                        show_interaction = True
 
             #  paint the road users onto the road
             for ru in RoadUser.OnRoad:
@@ -196,7 +200,7 @@ class Display:
             pygame.display.update()
 
             # wait a while if we're in a display mode which allows user to follow the interactions
-            if len(Interaction.active) != 0 and self._display_level > 2:
+            if len(Interaction.active) != 0 and self._display_level > 2 and show_interaction:
                 time.sleep(.3)
 
     def get_inter_box_height(self, ai):
@@ -244,7 +248,7 @@ class Display:
         # turn west and east boundaries into pixel measurements, boxes drawn top to bottom
         west = west_end * self.pixel_per_meters_wide
         east = east_end * self.pixel_per_meters_wide
-        pygame.draw.rect(self.sim_display, color, (west, top, east-west, bottom), 4)
+        pygame.draw.rect(self.sim_display, color, (west, top, east-west, bottom), 3)
 
     def paint_icon(self, type, dirxn, locn):
         """ This function displays the appropriate icon for each road user
@@ -252,11 +256,11 @@ class Display:
         """
         # get the appropriate icon
         if type == 'Motor Vehicle' and dirxn == 'WestBound':
-            self.paint_icon_in_lane(pygame.transform.flip(self.mv_icon, False, False), 2, locn)
+            self.paint_icon_in_lane(pygame.transform.flip(self.mv_icon, False, False), 2, locn - 15)
 
         elif type == 'Motor Vehicle' and dirxn == 'EastBound':
             # icon = MV
-            self.paint_icon_in_lane(pygame.transform.flip(self.mv_icon, False, False), 3.4, locn - 30)
+            self.paint_icon_in_lane(pygame.transform.flip(self.mv_icon, False, False), 3.4, locn - 10)
         elif type == 'Bicycle' and dirxn == 'WestBound':
             # icon = bike
             self.paint_icon_in_lane(pygame.transform.flip(self.bike_icon, True, False), 1.15, locn)
@@ -1552,6 +1556,8 @@ if __name__ == '__main__':
     parser.add_argument('-pd', '--pedspeeddistr', type=int, default=1, help='specify pedestrian speed distribution (0=all pedestrians travel at pedspeed, 1=normal distribution with 85th percentile at pedspeed value).')
     parser.add_argument('-vd', '--mvspeeddistr', type=int, default=1, help='specify vehicle speed distribution (0=all vehicles travel at mvspeed, 1=normal distribution with 85th percentile at mvspeed value).')
 
+    parser.add_argument('-id', '--iaxndisplay', type=int, default=0, help="specify which interaction types to show (0=all interactions, 1=critical interactions)")
+
     parser.add_argument('-d', '--display', type=int, default=1, help='specify a display level from 0 to 9.\n' +
                         '0 = display only the number and rate of interactions\n' +
                         '1 = display the detailed interaction and road user information created in the simulation\n' +
@@ -1616,6 +1622,8 @@ if __name__ == '__main__':
             for source in RoadUserSource.list_of_road_user_sources:
                 print(source)
         print()
+
+    Display.ext_iaxn_display = args.iaxndisplay
 
     # SIMULATION LOOP STARTS HERE  *****************************************************************************
     while clk.still_running():
