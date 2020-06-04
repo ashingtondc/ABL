@@ -158,8 +158,10 @@ class Display:
             # Color management
             self.intxn_colors = {} # interaction id mapped to color
             self.color_queue = [Display.pink, Display.red, Display.orange, Display.yellow, Display.green, Display.seagreen, Display.blue, Display.indigo, Display.purple, Display.magenta]
+            self.speed_queue = [(0, "Off"), (0.3, "Slow"), (0.1, "Medium"), (0.05, "Fast")]
             self.num_colors = len(self.color_queue)
             self.color_index = 0
+            self.speed_index = 1
 
     def update(self):
         """ This function updates the simulation display at every loop through the simulation
@@ -170,6 +172,7 @@ class Display:
             if event.type == pygame.QUIT: ## defined in pygame.locals
                 pygame.quit()
                 sys.exit()
+        
 
         if self._display_level != 0:
             # blank the screen
@@ -196,12 +199,33 @@ class Display:
                 else:
                     Display.paint_icon(self, ru.type(), ru.direction(), ru.location())
 
+            # Button code
+            click = pygame.mouse.get_pressed()
+            mouse = pygame.mouse.get_pos()
+            if 1277 > mouse[0] > 1177 and 717 > mouse[1] > 667:
+                pygame.draw.rect(self.sim_display, Display.seagreen, (1177, 667, 100, 50), 0)
+                if click[0] == 1:
+                    time.sleep(0.1)
+                    self.speed_index += 1
+                    if self.speed_index > 3:
+                        self.speed_index = 0
+            else:
+                pygame.draw.rect(self.sim_display, Display.seagreen, (1177, 667, 100, 50), 3)
+
+            speed = self.speed_queue[self.speed_index]
+            smallText = pygame.font.Font("freesansbold.ttf",20)
+            text = smallText.render(speed[1], True, Display.white)
+            textRect = text.get_rect()
+            textRect.center = ( (1177+(100/2)), (667+(50/2)) )
+            self.sim_display.blit(text, textRect)
+
 
             pygame.display.update()
 
             # wait a while if we're in a display mode which allows user to follow the interactions
-            if len(Interaction.active) != 0 and self._display_level > 2 and show_interaction:
-                time.sleep(.3)
+            if len(Interaction.active) != 0 and self._display_level > 2 and show_interaction and speed[0] > 0:
+                time.sleep(speed[0])
+
 
     def get_inter_box_height(self, ai):
         road_users = ai._parties
@@ -263,16 +287,16 @@ class Display:
             self.paint_icon_in_lane(pygame.transform.flip(self.mv_icon, False, False), 3.4, locn - 10)
         elif type == 'Bicycle' and dirxn == 'WestBound':
             # icon = bike
-            self.paint_icon_in_lane(pygame.transform.flip(self.bike_icon, True, False), 1.15, locn)
+            self.paint_icon_in_lane(pygame.transform.flip(self.bike_icon, True, False), 1.15, locn - 32)
         elif type == 'Bicycle' and dirxn == 'EastBound':
             # icon = bike
-            self.paint_icon_in_lane(self.bike_icon, 4.5, locn - 65)
+            self.paint_icon_in_lane(self.bike_icon, 4.5, locn - 33)
         elif type == 'Pedestrian' and dirxn == 'WestBound':
             # icon = ped
-            self.paint_icon_in_lane(self.ped_icon[int(time.time() * 2) % 4], 0.5, locn)
+            self.paint_icon_in_lane(self.ped_icon[int(time.time() * 2) % 4], 0.5, locn - 23)
         elif type == 'Pedestrian' and dirxn == 'EastBound':
             # icon = ped
-            self.paint_icon_in_lane(self.ped_icon[int(time.time() * 2) % 4], 5, locn - 36)
+            self.paint_icon_in_lane(self.ped_icon[int(time.time() * 2) % 4], 5, locn - 23)
         else:  # type/direction combo is unknown
             pass
 

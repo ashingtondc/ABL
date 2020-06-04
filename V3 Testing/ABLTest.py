@@ -254,18 +254,19 @@ class TestPlatooning(unittest.TestCase):
         east_platooners = 0
         west_platooners = 0
         for user in users:
-            if user['direction'] == "EastBound":
-                if user['platoon']:
-                    east_platooners += 1
+            if user['type'] == "Motor Vehicle":
+                if user['direction'] == "EastBound":
+                    if user['platoon']:
+                        east_platooners += 1
+                    else:
+                        self.assertFalse(east_platooners == 1)
+                        east_platooners = 0
                 else:
-                    self.assertFalse(east_platooners == 1)
-                    east_platooners = 0
-            else:
-                if user['platoon']:
-                    west_platooners += 1
-                else:
-                    self.assertFalse(west_platooners == 1)
-                    west_platooners = 0
+                    if user['platoon']:
+                        west_platooners += 1
+                    else:
+                        self.assertFalse(west_platooners == 1)
+                        west_platooners = 0
         self.assertFalse(east_platooners == 1)
         self.assertFalse(west_platooners == 1)
 
