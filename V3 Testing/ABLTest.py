@@ -208,8 +208,8 @@ class TestVols(unittest.TestCase):
         peds = [item[0] for item in data]
         bikes = [item[1] for item in data]
         cars = [item[2] for item in data]
-        plt.hist(cars)
-        plt.show()
+        # plt.hist(cars)
+        # plt.show()
         pval = stats.normaltest(peds).pvalue
         self.assertGreater(pval, 0.05, msg="Enough evidence to reject null hypothesis that the data follows a normal distribution")
         pval = stats.normaltest(bikes).pvalue

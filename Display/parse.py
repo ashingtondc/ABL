@@ -224,7 +224,7 @@ def parseData(filename):
             if M >= 2:
                 if P > 0:
                     ped += 1
-                elif B > 0:
+                if B > 0:
                     bike += 1
         info['MV_MV_B'] = bike
         info['MV_MV_P'] = ped

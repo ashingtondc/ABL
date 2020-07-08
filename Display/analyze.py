@@ -67,6 +67,7 @@ def length():
     ax1.set_title("Influence of Varying Facility Length")
     ax1.plot(x, y)
     plt.show()
+    return end
 
 def bike_vol(vol):
     filename = "var_volume%s.txt" % str(vol)
