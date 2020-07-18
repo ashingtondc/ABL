@@ -7,6 +7,7 @@ import multiprocessing as mp
 import statistics
 import datetime as dt
 import json
+import time
 import argparse
 
 
@@ -189,6 +190,20 @@ def dir_split(start, filename, hours):
     return end
 
 if __name__ == '__main__':
-    start = dt.datetime.now()
-    end = dir_split(start, "data/dir_split.json", 5)
-    print(end - start)
+    try:
+        print("Starting volume")
+        time.sleep(5)
+        start = dt.datetime.now()
+        end = volume(start, "data/volume.json", 5000)
+        print(end - start)
+    except:
+        print("Failed volume")
+    time.sleep(5)
+    try:
+        print("Starting dir_split")
+        time.sleep(5)
+        start = dt.datetime.now()
+        end = dir_split(start, "data/dir_split.json", 5000)
+        print(end - start)
+    except:
+        print("Failed dir_split")

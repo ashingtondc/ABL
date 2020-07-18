@@ -66,7 +66,7 @@ def length(start, outfile, hours):
     for filename in filenames:
         data = parseData(filename)
         os.remove(filename)
-        interactions = data['MV_MV_P'] + data['MV_MV_B']
+        interactions = data['vru_interactions']
         y.append(interactions/hours)
     
     end = dt.datetime.now()
@@ -164,7 +164,7 @@ def mv_split(hours, split):
     return (split, filename)
 
 def dir_split(start, outfile, hours):
-    pool = mp.Pool()
+    pool = mp.Pool(processes=4)
     results = [pool.apply_async(bike_split, args=[hours, split]) for split in range(0, 110, 10)]
     output = [p.get() for p in results]
     pool.close()
@@ -174,12 +174,12 @@ def dir_split(start, outfile, hours):
     y_bikes = []
 
     for filename in filenames:
-        data = parseData(filename)
+        data = parseDataLite(filename)
         os.remove(filename)
-        interactions = data['MV_MV_P'] + data['MV_MV_B']
+        interactions = data['vru_interactions']
         y_bikes.append(interactions/hours)
 
-    pool = mp.Pool()
+    pool = mp.Pool(processes=4)
     results = [pool.apply_async(ped_split, args=[hours, split]) for split in range(0, 110, 10)]
     output = [p.get() for p in results]
     pool.close()
@@ -189,12 +189,12 @@ def dir_split(start, outfile, hours):
     y_peds = []
 
     for filename in filenames:
-        data = parseData(filename)
+        data = parseDataLite(filename)
         os.remove(filename)
-        interactions = data['MV_MV_P'] + data['MV_MV_B']
+        interactions = data['vru_interactions']
         y_peds.append(interactions/hours)
 
-    pool = mp.Pool()
+    pool = mp.Pool(processes=4)
     results = [pool.apply_async(mv_split, args=[hours, split]) for split in range(0, 110, 10)]
     output = [p.get() for p in results]
     pool.close()
@@ -204,9 +204,9 @@ def dir_split(start, outfile, hours):
     y_mv = []
 
     for filename in filenames:
-        data = parseData(filename)
+        data = parseDataLite(filename)
         os.remove(filename)
-        interactions = data['MV_MV_P'] + data['MV_MV_B']
+        interactions = data['vru_interactions']
         y_mv.append(interactions/hours)
 
     end = dt.datetime.now()
@@ -228,5 +228,5 @@ def dir_split(start, outfile, hours):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
-    end = dir_split(start, "data/dir_split.json", 1)
+    end = dir_split(start, "data/dir_split.json", 5000)
     print(end - start)

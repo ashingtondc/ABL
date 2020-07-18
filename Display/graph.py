@@ -82,7 +82,7 @@ def dir_split(data):
     plt.show()
 
 if __name__ == "__main__":
-    filename = "data/dir_split.json"
+    filename = "data/length.json"
     with open(filename, "r") as file:
         data = json.load(file)
-        dir_split(data)
+        length(data)
