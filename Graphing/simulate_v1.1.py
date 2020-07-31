@@ -46,6 +46,45 @@ def speed(start, outfile, hours):
         json.dump(data, file, indent=4)
     return end
 
+def length_v2_helper(hours, length, speed):
+    filename = "var_length_v2%s_%s.txt" % (str(length), str(speed))
+
+    os.system("python main.py -t %d -p 0 -vs %d -r %d > %s" % (hours, speed, length, filename))
+    
+    return (length, filename)
+
+def length_v2(start, outfile, hours):
+    storage = []
+    # List of tuples of the format (speed, x, y)
+    for speed in range(4, 27, 2):
+        pool = mp.Pool()
+        results = [pool.apply_async(length_v2_helper, args=[hours, length, speed]) for length in range(100, 2100, 100)]
+        output = [p.get() for p in results]
+        pool.close()
+        
+        x = [m[0] for m in output]
+        filenames = [m[1] for m in output]
+        y = []
+
+        for filename in filenames:
+            data = parseDataLite(filename)
+            os.remove(filename)
+            interactions = data['vru_interactions']
+            y.append(interactions/hours)
+        storage.append((speed, x, y))
+    
+    end = dt.datetime.now()
+
+    with open(outfile, "w") as file:
+        data = {
+            "graphs": storage,
+            "start": str(start),
+            "end": str(end)
+        }
+
+        json.dump(data, file, indent=4)
+    return end
+
 def length_helper(hours, length):
     filename = "var_length%s.txt" % str(length)
 
@@ -228,5 +267,5 @@ def dir_split(start, outfile, hours):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
-    end = dir_split(start, "data/dir_split.json", 5000)
+    end = length_v2(start, "data/length_v2.json", 1)
     print(end - start)

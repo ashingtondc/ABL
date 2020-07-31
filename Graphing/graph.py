@@ -27,6 +27,21 @@ def speed(data):
     ax2.set_title("Influence of Varying Motor Vehicle Speeds")
     plt.show()
 
+def length_v2(data):
+    graphs = data['graphs']
+    fig = plt.figure()
+    ax1 = fig.add_subplot()
+    ax1.set_xlabel("Facility Length (m)")
+    ax1.set_ylabel("MVxMVxVRU Interactions/Hour")
+    ax1.set_title("Influence of Varying Facility Length")
+    for graph in graphs:
+        speed = graph[0]
+        x = graph[1]
+        y = graph[2]
+        ax1.plot(x, y)
+        plt.text(x[-1], y[-1], str(speed))
+    plt.show()
+
 def length(data):
     x = data['x']
     y = data['y']
@@ -82,7 +97,7 @@ def dir_split(data):
     plt.show()
 
 if __name__ == "__main__":
-    filename = "data/length.json"
+    filename = "data/length_v2.json"
     with open(filename, "r") as file:
         data = json.load(file)
-        length(data)
+        length_v2(data)
