@@ -13,7 +13,7 @@ import argparse
 def speed_helper(hours, speed):
     filename = "var_speed%s.txt" % str(speed)
     # print(speed)
-    os.system("python main.py -r 1620 -t %d -c 0 -vs %d > %s" % (hours, speed, filename))
+    os.system("python main.py -r 1620 -t %d -vs %d > %s" % (hours, speed, filename))
     
     return (speed, filename)
 
@@ -49,7 +49,7 @@ def speed(start, outfile, hours):
 def length_v2_helper(hours, length, speed):
     filename = "var_length_v2%s_%s.txt" % (str(length), str(speed))
 
-    os.system("python main.py -t %d -p 0 -vs %d -r %d > %s" % (hours, speed, length, filename))
+    os.system("python main.py -t %d -vs %d -r %d > %s" % (hours, speed, length, filename))
     
     return (length, filename)
 

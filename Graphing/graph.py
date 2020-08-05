@@ -35,7 +35,7 @@ def length_v2(data):
     ax1.set_ylabel("MVxMVxVRU Interactions/Hour")
     ax1.set_title("Influence of Varying Facility Length")
     for graph in graphs:
-        speed = graph[0]
+        speed = round(graph[0] * 2.237, 2)
         x = graph[1]
         y = graph[2]
         ax1.plot(x, y)
