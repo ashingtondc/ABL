@@ -56,10 +56,10 @@ def length_v2_helper(hours, length, speed):
 def length_v2(start, outfile, hours):
     storage = []
     # List of tuples of the format (speed, x, y)
-    for speed in range(4, 27, 2):
+    for speed in range(20, 75, 5):
         print("Starting  batch for speed %d", speed)
         pool = mp.Pool(processes=30)
-        results = [pool.apply_async(length_v2_helper, args=[hours, length, speed]) for length in range(100, 2100, 100)]
+        results = [pool.apply_async(length_v2_helper, args=[hours, length, speed/2.23693629]) for length in range(100, 2100, 100)]
         output = [p.get() for p in results]
         pool.close()
         
