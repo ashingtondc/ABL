@@ -28,9 +28,9 @@ def speed(start, outfile, hours):
     y = []
 
     for filename in filenames:
-        data = parseData(filename)
+        data = parseDataLite(filename)
         os.remove(filename)
-        interactions = data['MV_MV_P'] + data['MV_MV_B']
+        interactions = data['vru_interactions']
         y.append(interactions/hours)
 
     end = dt.datetime.now()
@@ -268,5 +268,5 @@ def dir_split(start, outfile, hours):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
-    end = length_v2(start, "data/length_v2.json", 5000)
+    end = speed(start, "data/speed.json", 1)
     print(end - start)
