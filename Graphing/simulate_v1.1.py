@@ -40,7 +40,8 @@ def speed(start, outfile, hours):
             "x": x,
             "y": y,
             "start": str(start),
-            "end": str(end)
+            "end": str(end),
+            "cmd": "python main.py -r 1620 -t time -vs speed > filename"
         }
 
         json.dump(data, file, indent=4)
@@ -80,7 +81,8 @@ def length_v2(start, outfile, hours):
         data = {
             "graphs": storage,
             "start": str(start),
-            "end": str(end)
+            "end": str(end),
+            "cmd": "python main.py -t time -vs speed -r length > filename"
         }
 
         json.dump(data, file, indent=4)
@@ -116,7 +118,8 @@ def length(start, outfile, hours):
             "x": x,
             "y": y,
             "start": str(start),
-            "end": str(end)
+            "end": str(end),
+            "cmd": "python main.py -t time -p 0 -r length > filename"
         }
 
         json.dump(data, file, indent=4)
@@ -176,7 +179,8 @@ def volume(start, outfile, hours):
             "x_peds": x_peds,
             "y_peds": y_peds,
             "start": str(start),
-            "end": str(end)
+            "end": str(end),
+            "cmd": ["python main.py -t time -p 0 -c volume > filename", "python main.py -t time -c 0 -p volume > filename"]
         }
 
         json.dump(data, file, indent=4)
@@ -260,7 +264,8 @@ def dir_split(start, outfile, hours):
             "x_mv": x_mv,
             "y_mv": y_mv,
             "start": str(start),
-            "end": str(end)
+            "end": str(end),
+            "cmd": ["python main.py -sd 1 -t time -c 0 -vp split > filename", "python main.py -sd 1 -t time -p 0 -vp split > filename", "python main.py -sd 1 -t time -vp split > filename"]
         }
 
         json.dump(data, file, indent=4)
