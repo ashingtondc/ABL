@@ -128,14 +128,14 @@ def length(start, outfile, hours):
 def bike_vol(hours, vol):
     filename = "var_volume%s.txt" % str(vol)
 
-    os.system("python main.py -t %d -p 0 -c %d > %s" % (hours, vol, filename))
+    os.system("python main.py -t %d -p 0 -cd 0 -c %d > %s" % (hours, vol, filename))
    
     return (vol, filename)
 
 def ped_vol(hours, vol):
     filename = "var_volume%s.txt" % str(vol)
 
-    os.system("python main.py -t %d -c 0 -p %d > %s" % (hours, vol, filename))
+    os.system("python main.py -t %d -c 0 -pd 0 -p %d > %s" % (hours, vol, filename))
     
     return (vol, filename)
 
@@ -150,9 +150,9 @@ def volume(start, outfile, hours):
     y_bikes = []
 
     for filename in filenames:
-        data = parseData(filename)
+        data = parseDataLite(filename)
         os.remove(filename)
-        interactions = data['MV_MV_P'] + data['MV_MV_B']
+        interactions = data['vru_interactions']
         y_bikes.append(interactions/hours)
 
     pool = mp.Pool()
@@ -165,9 +165,9 @@ def volume(start, outfile, hours):
     y_peds = []
 
     for filename in filenames:
-        data = parseData(filename)
+        data = parseDataLite(filename)
         os.remove(filename)
-        interactions = data['MV_MV_P'] + data['MV_MV_B']
+        interactions = data['vru_interactions']
         y_peds.append(interactions/hours)
 
     end = dt.datetime.now()
@@ -180,7 +180,7 @@ def volume(start, outfile, hours):
             "y_peds": y_peds,
             "start": str(start),
             "end": str(end),
-            "cmd": ["python main.py -t time -p 0 -c volume > filename", "python main.py -t time -c 0 -p volume > filename"]
+            "cmd": ["python main.py -t time -p 0 -cd 0 -c volume > filename", "python main.py -t time -c 0 -pd 0 -p volume > filename"]
         }
 
         json.dump(data, file, indent=4)
@@ -273,5 +273,5 @@ def dir_split(start, outfile, hours):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
-    end = speed(start, "data/speed.json", 1)
+    end = volume(start, "data/volume_fixed.json", 5000)
     print(end - start)
