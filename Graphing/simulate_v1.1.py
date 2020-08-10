@@ -310,5 +310,5 @@ def dir_split(start, outfile, hours):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
-    end = duration(start, "data/duration.json", 1)
+    end = duration(start, "data/duration.json", 5000)
     print(end - start)
