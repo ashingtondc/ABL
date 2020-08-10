@@ -9,6 +9,17 @@ import datetime as dt
 import json
 import argparse
 
+def duration(data):
+    x = data['x']
+    y = data['y']
+    fig = plt.figure()
+    ax1 = fig.add_subplot()
+    ax1.set_xlabel("Interaction Duration (s)")
+    ax1.set_ylabel("MVxMVxVRU Interactions/Hour")
+    ax1.set_title("Influence of Varying Interaction Duration")
+    ax1.plot(x, y)
+    plt.show()
+
 def speed(data):
     x = data['x']
     y = data['y']
@@ -97,7 +108,7 @@ def dir_split(data):
     plt.show()
 
 if __name__ == "__main__":
-    filename = "data/volume_fixed.json"
+    filename = "data/duration.json"
     with open(filename, "r") as file:
         data = json.load(file)
-        volume(data)
+        duration(data)

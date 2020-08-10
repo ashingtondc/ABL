@@ -10,6 +10,43 @@ import json
 import argparse
 
 
+def duration_helper(hours, duration):
+    filename = "var_duration%s.txt" % str(duration)
+    # print(speed)
+    os.system("python main.py -t %d -it %d > %s" % (hours, duration, filename))
+    
+    return (duration, filename)
+
+def duration(start, outfile, hours):
+    pool = mp.Pool()
+    results = [pool.apply_async(duration_helper, args=[hours, duration]) for duration in range(0, 21)]
+    output = [p.get() for p in results]
+    pool.close()
+    
+    x = [m[0] for m in output]
+    filenames = [m[1] for m in output]
+    y = []
+
+    for filename in filenames:
+        data = parseDataLite(filename)
+        os.remove(filename)
+        interactions = data['vru_interactions']
+        y.append(interactions/hours)
+
+    end = dt.datetime.now()
+
+    with open(outfile, "w") as file:
+        data = {
+            "x": x,
+            "y": y,
+            "start": str(start),
+            "end": str(end),
+            "cmd": "python main.py -t time -it duration > filename"
+        }
+
+        json.dump(data, file, indent=4)
+    return end
+
 def speed_helper(hours, speed):
     filename = "var_speed%s.txt" % str(speed)
     # print(speed)
@@ -273,5 +310,5 @@ def dir_split(start, outfile, hours):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
-    end = volume(start, "data/volume_fixed.json", 5000)
+    end = duration(start, "data/duration.json", 1)
     print(end - start)
