@@ -10,6 +10,52 @@ import json
 import argparse
 
 
+def fhwa_helper(setting, bikes, hours):
+    vol = setting[0]
+    speed = setting[1] // 2.237
+    filename = "var_fhwa%s.txt" % str(bikes)
+    os.system("python main.py  -p 0 -t %d -c %d -v %d -vs %d > %s" % (hours, bikes, vol, speed, filename))
+
+    return (bikes, filename)
+
+
+def fhwa(start, outfile, hours):
+    settings = [(300, 25, "Preferred - Slow"), (300, 35, "Preferred - Fast"), (600, 35, "Potential Fast"), (600, 25, "Potential - Slow")]
+    lines = []
+    for setting in settings:
+        pool = mp.Pool(processes=30)
+        results = [pool.apply_async(fhwa_helper, args=[setting, bikes, hours]) for bikes in range(0, 105, 5)]
+        output = [p.get() for p in results]
+        pool.close()
+        
+        x = [m[0] for m in output]
+        filenames = [m[1] for m in output]
+        y = []
+
+        for filename in filenames:
+            data = parseDataLite(filename)
+            os.remove(filename)
+            interactions = data['vru_interactions']
+            y.append(interactions/hours)
+        line = {
+            "x": x,
+            "y": y,
+            "type": setting[2]
+        }
+        lines.append(line)
+    end = dt.datetime.now()
+
+    with open(outfile, "w") as file:
+        data = {
+            "datasets": lines,
+            "start": str(start),
+            "end": str(end),
+            "cmd": "python main.py  -p 0 -t hours -c bikes -v vehicles -vs vehicle_speed > filename"
+        }
+
+        json.dump(data, file, indent=4)
+    return end
+
 def duration_helper(hours, duration):
     filename = "var_duration%s.txt" % str(duration)
     # print(speed)
@@ -347,5 +393,9 @@ def dir_split(start, outfile, hours):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
+<<<<<<< HEAD
     end = volume_2(start, "data/volume_2.json", 1000)
+=======
+    end = fhwa(start, "data/fhwa.json", 1)
+>>>>>>> e1976254b0cec7816a796e64aac90af4d8c839ca
     print(end - start)
