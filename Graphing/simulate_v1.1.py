@@ -393,9 +393,5 @@ def dir_split(start, outfile, hours):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
-<<<<<<< HEAD
     end = volume_2(start, "data/volume_2.json", 1000)
-=======
-    end = fhwa(start, "data/fhwa.json", 1)
->>>>>>> e1976254b0cec7816a796e64aac90af4d8c839ca
     print(end - start)
