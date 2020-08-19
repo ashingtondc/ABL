@@ -313,8 +313,16 @@ def parseDataLite(filename):
         file.readline()
         # Interactions
         file.readline()
-        unaggregated = extract_nums(file.readline())[0]
-        recorded = extract_nums(file.readline())[0]
+        parsed_interactions = extract_nums(file.readline())
+        if len(parsed_interactions) == 0:
+            unaggregated = 0
+        else:
+            unaggregated = parsed_interactions[0]
+        parsed_interactions = extract_nums(file.readline())
+        if len(parsed_interactions) == 0:
+            recorded = 0
+        else:
+            recorded = parsed_interactions[0]
         file.readline()
         line = file.readline()
         interactions = []
