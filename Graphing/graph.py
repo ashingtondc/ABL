@@ -53,6 +53,17 @@ def length_v2(data):
         plt.text(x[-1], y[-1], str(speed))
     plt.show()
 
+def volume_2(data):
+    x = data['x']
+    y = data['y']
+    fig = plt.figure()
+    ax1 = fig.add_subplot()
+    ax1.set_xlabel("Vehicle Volume (MV/HR)")
+    ax1.set_ylabel("MVxMV Interactions/Hour")
+    ax1.set_title("Influence of Varying MV Volumes")
+    ax1.plot(x, y)
+    plt.show()
+
 def length(data):
     x = data['x']
     y = data['y']
