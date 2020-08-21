@@ -108,7 +108,7 @@ def dir_split(data):
     plt.show()
 
 if __name__ == "__main__":
-    filename = "data/duration.json"
+    filename = "data/speed.json"
     with open(filename, "r") as file:
         data = json.load(file)
-        duration(data)
+        speed(data)

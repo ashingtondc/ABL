@@ -96,17 +96,17 @@ def duration(start, outfile, hours):
 def speed_helper(hours, speed):
     filename = "var_speed%s.txt" % str(speed)
     # print(speed)
-    os.system("python main.py -r 1620 -t %d -vs %d > %s" % (hours, speed, filename))
+    os.system("python main.py -r 1620 -t %d -vs %d > %s" % (hours, speed/2.23693629, filename))
     
     return (speed, filename)
 
 def speed(start, outfile, hours):
-    pool = mp.Pool()
-    results = [pool.apply_async(speed_helper, args=[hours, speed]) for speed in range(4, 27, 2)]
+    pool = mp.Pool(processes=60)
+    results = [pool.apply_async(speed_helper, args=[hours, speed]) for speed in range(20, 65, 5)]
     output = [p.get() for p in results]
     pool.close()
     
-    x = [m[0] * 2.237 for m in output]
+    x = [m for m in range(20, 65, 5)]
     filenames = [m[1] for m in output]
     y = []
 
@@ -356,5 +356,5 @@ def dir_split(start, outfile, hours):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
-    end = fhwa(start, "data/fhwa.json", 1)
+    end = fhwa(start, "data/fhwa.json", 1000)
     print(end - start)
