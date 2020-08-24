@@ -260,7 +260,7 @@ def ped_vol(hours, vol):
     return (vol, filename)
 
 def volume(start, outfile, hours):
-    pool = mp.Pool(processes=15)
+    pool = mp.Pool(processes=31)
     results = [pool.apply_async(bike_vol, args=[hours, vol]) for vol in range(10, 310, 10)]
     output = [p.get() for p in results]
     pool.close()
@@ -275,7 +275,7 @@ def volume(start, outfile, hours):
         interactions = data['vru_interactions']
         y_bikes.append(interactions/hours)
 
-    pool = mp.Pool(processes=15)
+    pool = mp.Pool(processes=31)
     results = [pool.apply_async(ped_vol, args=[hours, vol]) for vol in range(10, 310, 10)]
     output = [p.get() for p in results]
     pool.close()
@@ -393,5 +393,5 @@ def dir_split(start, outfile, hours):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
-    end = volume_2(start, "data/volume_2.json", 1000)
+    end = volume(start, "data/volume.json", 2500)
     print(end - start)

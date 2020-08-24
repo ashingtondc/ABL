@@ -119,7 +119,7 @@ def dir_split(data):
     plt.show()
 
 if __name__ == "__main__":
-    filename = "data/volume_2.json"
+    filename = "data/volume.json"
     with open(filename, "r") as file:
         data = json.load(file)
-        volume_2(data)
+        volume(data)
