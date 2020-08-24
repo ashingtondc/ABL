@@ -20,7 +20,7 @@ def fhwa_helper(setting, bikes, hours):
 
 
 def fhwa(start, outfile, hours):
-    settings = [(300, 25, "Preferred - Slow"), (300, 35, "Preferred - Fast"), (600, 35, "Potential Fast"), (600, 25, "Potential - Slow")]
+    settings = [(300, 25, "Preferred - Slow"), (300, 35, "Preferred - Fast"), (600, 35, "Potential - Fast"), (600, 25, "Potential - Slow")]
     lines = []
     for setting in settings:
         pool = mp.Pool(processes=30)

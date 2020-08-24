@@ -9,6 +9,26 @@ import datetime as dt
 import json
 import argparse
 
+
+def fhwa(data):
+
+    fig = plt.figure()
+    ax1 = fig.add_subplot()
+    ax1.set_xlabel("Volume of Bicycles/Hour")
+    ax1.set_ylabel("MVxMVxCyclist Interactions/Hour")
+    ax1.set_title("Influence of FHWA Guidelines")
+
+    legend = []
+    for dataset in data['datasets']:
+        x = dataset['x']
+        y = dataset['y']
+        legend.append(dataset['type'])
+        ax1.plot(x, y)
+    
+    ax1.legend(legend)
+
+    plt.show()
+
 def duration(data):
     x = data['x']
     y = data['y']
@@ -119,7 +139,7 @@ def dir_split(data):
     plt.show()
 
 if __name__ == "__main__":
-    filename = "data/speed.json"
+    filename = "data/fhwa.json"
     with open(filename, "r") as file:
         data = json.load(file)
-        speed(data)
+        fhwa(data)
