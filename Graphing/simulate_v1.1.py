@@ -31,11 +31,12 @@ def fhwa(start, outfile, hours):
         x = [m[0] for m in output]
         filenames = [m[1] for m in output]
         y = []
-
+        params = None
         for filename in filenames:
             data = parseDataLite(filename)
             os.remove(filename)
             interactions = data['vru_interactions']
+            params = data['parameters']
             y.append(interactions/hours)
         line = {
             "x": x,
@@ -50,7 +51,8 @@ def fhwa(start, outfile, hours):
             "datasets": lines,
             "start": str(start),
             "end": str(end),
-            "cmd": "python main.py  -p 0 -t hours -c bikes -v vehicles -vs vehicle_speed > filename"
+            "cmd": "python main.py  -p 0 -t hours -c bikes -v vehicles -vs vehicle_speed > filename",
+            "parameters": params
         }
 
         json.dump(data, file, indent=4)
@@ -72,11 +74,12 @@ def duration(start, outfile, hours):
     x = [m[0] for m in output]
     filenames = [m[1] for m in output]
     y = []
-
+    params = None
     for filename in filenames:
         data = parseDataLite(filename)
         os.remove(filename)
         interactions = data['vru_interactions']
+        params = data['parameters']
         y.append(interactions/hours)
 
     end = dt.datetime.now()
@@ -87,7 +90,8 @@ def duration(start, outfile, hours):
             "y": y,
             "start": str(start),
             "end": str(end),
-            "cmd": "python main.py -t time -it duration > filename"
+            "cmd": "python main.py -t time -it duration > filename",
+            "parameters": params
         }
 
         json.dump(data, file, indent=4)
@@ -101,7 +105,7 @@ def speed_helper(hours, speed):
     return (speed, filename)
 
 def speed(start, outfile, hours):
-    pool = mp.Pool(processes=60)
+    pool = mp.Pool()
     results = [pool.apply_async(speed_helper, args=[hours, speed]) for speed in range(20, 65, 5)]
     output = [p.get() for p in results]
     pool.close()
@@ -109,11 +113,12 @@ def speed(start, outfile, hours):
     x = [m for m in range(20, 65, 5)]
     filenames = [m[1] for m in output]
     y = []
-
+    params = None
     for filename in filenames:
         data = parseDataLite(filename)
         os.remove(filename)
         interactions = data['vru_interactions']
+        params = data['parameters']
         y.append(interactions/hours)
 
     end = dt.datetime.now()
@@ -124,7 +129,8 @@ def speed(start, outfile, hours):
             "y": y,
             "start": str(start),
             "end": str(end),
-            "cmd": "python main.py -r 1620 -t time -vs speed > filename"
+            "cmd": "python main.py -r 1620 -t time -vs speed > filename",
+            "parameters": params
         }
 
         json.dump(data, file, indent=4)
@@ -150,11 +156,12 @@ def length_v2(start, outfile, hours):
         x = [m[0] for m in output]
         filenames = [m[1] for m in output]
         y = []
-
+        params = None
         for filename in filenames:
             data = parseDataLite(filename)
             os.remove(filename)
             interactions = data['vru_interactions']
+            params = data['parameters']
             y.append(interactions/hours)
         storage.append((speed, x, y))
     
@@ -165,7 +172,8 @@ def length_v2(start, outfile, hours):
             "graphs": storage,
             "start": str(start),
             "end": str(end),
-            "cmd": "python main.py -t time -vs speed -r length > filename"
+            "cmd": "python main.py -t time -vs speed -r length > filename",
+            "parameters": params
         }
 
         json.dump(data, file, indent=4)
@@ -187,11 +195,12 @@ def length(start, outfile, hours):
     x = [m[0] for m in output]
     filenames = [m[1] for m in output]
     y = []
-
+    params = None
     for filename in filenames:
         data = parseData(filename)
         os.remove(filename)
         interactions = data['vru_interactions']
+        params = data['parameters']
         y.append(interactions/hours)
     
     end = dt.datetime.now()
@@ -202,7 +211,8 @@ def length(start, outfile, hours):
             "y": y,
             "start": str(start),
             "end": str(end),
-            "cmd": "python main.py -t time -p 0 -r length > filename"
+            "cmd": "python main.py -t time -p 0 -r length > filename",
+            "parameters": params
         }
 
         json.dump(data, file, indent=4)
@@ -224,11 +234,12 @@ def volume_2(start, outfile, hours):
     x = [m[0] for m in output]
     filenames = [m[1] for m in output]
     y = []
-
+    params = None
     for filename in filenames:
         data = parseDataLite(filename)
         os.remove(filename)
         interactions = data['mvxmv_interactions']
+        params = data['parameters']
         y.append(interactions/hours)
 
     end = dt.datetime.now()
@@ -239,7 +250,8 @@ def volume_2(start, outfile, hours):
             "y": y,
             "start": str(start),
             "end": str(end),
-            "cmd": "python main.py -t hours -p 0 -c 0 -v volume > filename"
+            "cmd": "python main.py -t hours -p 0 -c 0 -v volume > filename",
+            "parameters": params
         }
 
         json.dump(data, file, indent=4)
@@ -268,11 +280,12 @@ def volume(start, outfile, hours):
     x_bikes = [m[0] for m in output]
     filenames = [m[1] for m in output]
     y_bikes = []
-
+    params1 = None
     for filename in filenames:
         data = parseDataLite(filename)
         os.remove(filename)
         interactions = data['vru_interactions']
+        params1 = data['parameters']
         y_bikes.append(interactions/hours)
 
     pool = mp.Pool(processes=31)
@@ -283,11 +296,12 @@ def volume(start, outfile, hours):
     x_peds = [m[0] for m in output]
     filenames = [m[1] for m in output]
     y_peds = []
-
+    params2 = None
     for filename in filenames:
         data = parseDataLite(filename)
         os.remove(filename)
         interactions = data['vru_interactions']
+        params2 = data['parameters']
         y_peds.append(interactions/hours)
 
     end = dt.datetime.now()
@@ -300,7 +314,8 @@ def volume(start, outfile, hours):
             "y_peds": y_peds,
             "start": str(start),
             "end": str(end),
-            "cmd": ["python main.py -t time -p 0 -cd 0 -c volume > filename", "python main.py -t time -c 0 -pd 0 -p volume > filename"]
+            "cmd": ["python main.py -t time -p 0 -cd 0 -c volume > filename", "python main.py -t time -c 0 -pd 0 -p volume > filename"],
+            "parameters": [params1, params2]
         }
 
         json.dump(data, file, indent=4)
@@ -336,11 +351,12 @@ def dir_split(start, outfile, hours):
     x_bikes = [m[0] for m in output]
     filenames = [m[1] for m in output]
     y_bikes = []
-
+    params1 = None
     for filename in filenames:
         data = parseDataLite(filename)
         os.remove(filename)
         interactions = data['vru_interactions']
+        params1 = data['parameters']
         y_bikes.append(interactions/hours)
 
     pool = mp.Pool(processes=4)
@@ -351,11 +367,12 @@ def dir_split(start, outfile, hours):
     x_peds = [m[0] for m in output]
     filenames = [m[1] for m in output]
     y_peds = []
-
+    params2 = None
     for filename in filenames:
         data = parseDataLite(filename)
         os.remove(filename)
         interactions = data['vru_interactions']
+        params2 = data['parameters']
         y_peds.append(interactions/hours)
 
     pool = mp.Pool(processes=4)
@@ -366,11 +383,12 @@ def dir_split(start, outfile, hours):
     x_mv = [m[0] for m in output]
     filenames = [m[1] for m in output]
     y_mv = []
-
+    params3 = None
     for filename in filenames:
         data = parseDataLite(filename)
         os.remove(filename)
         interactions = data['vru_interactions']
+        params3 = data['parameters']
         y_mv.append(interactions/hours)
 
     end = dt.datetime.now()
@@ -385,7 +403,8 @@ def dir_split(start, outfile, hours):
             "y_mv": y_mv,
             "start": str(start),
             "end": str(end),
-            "cmd": ["python main.py -sd 1 -t time -c 0 -vp split > filename", "python main.py -sd 1 -t time -p 0 -vp split > filename", "python main.py -sd 1 -t time -vp split > filename"]
+            "cmd": ["python main.py -sd 1 -t time -c 0 -vp split > filename", "python main.py -sd 1 -t time -p 0 -vp split > filename", "python main.py -sd 1 -t time -vp split > filename"],
+            "parameters": [params1, params2, params3]
         }
 
         json.dump(data, file, indent=4)
@@ -393,5 +412,5 @@ def dir_split(start, outfile, hours):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
-    end = volume(start, "data/volume.json", 2500)
+    end = speed(start, "data/speed_test.json", 1)
     print(end - start)

@@ -18,28 +18,27 @@ def writeFile(filein, fileout):
 
 def parseData(filename):
     info = {}
+    params = {}
     with open(filename, 'r') as file:
         line = file.readline()
         line = file.readline()
         line = file.readline()
         line = file.readline()
         line = line.split()
-        print(line)
         info['start_time'] = line[3] + " " + line[4]
         line = file.readline()
         line = file.readline()
         line = file.readline()
         # Command line parameter values
         while not line.isspace():
-            print(line)
             param = re.search("^[^:]+", line)
             param = param.group().replace(" ", "_")
             param = param.lower()
             val = re.search("-?\d+\.?\d*", line)
             val = float(val.group())
-            info[param] = val
+            params[param] = val
             line = file.readline()
-        
+        info['parameters'] = params
         line = file.readline()
         # Road info
         line = file.readline()
@@ -240,8 +239,8 @@ def parseData(filename):
 
 def parseDataLite(filename):
     info = {}
+    params = {}
     with open(filename, 'r') as file:
-        print(filename)
         line = file.readline()
         line = file.readline()
         line = file.readline()
@@ -258,9 +257,9 @@ def parseDataLite(filename):
             param = param.lower()
             val = re.search("-?\d+\.?\d*", line)
             val = float(val.group())
-            info[param] = val
+            params[param] = val
             line = file.readline()
-        
+        info['parameters'] = params
         line = file.readline()
         # Road info
         line = file.readline()

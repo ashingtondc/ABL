@@ -1,0 +1,49 @@
+{
+    "x": [
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60
+    ],
+    "y": [
+        9.0,
+        2.0,
+        11.0,
+        5.0,
+        17.0,
+        8.0,
+        6.0,
+        4.0,
+        6.0
+    ],
+    "start": "2020-08-26 11:55:29.860323",
+    "end": "2020-08-26 11:55:38.971000",
+    "cmd": "python main.py -r 1620 -t time -vs speed > filename",
+    "parameters": {
+        "road_length": 1620.0,
+        "time": 1.0,
+        "mvxmv_i-axn_time/length": 2.0,
+        "ped_volume": 10.0,
+        "bike_volume": 20.0,
+        "mv_volume": 60.0,
+        "ped_%_split": 50.0,
+        "bike_%_split": 50.0,
+        "mv_%_split": 50.0,
+        "ped_arrival_distr": 1.0,
+        "bike_arrival_distr": 1.0,
+        "mv_arrival_distr": 1.0,
+        "ped_speed": 1.22,
+        "bike_speed": 5.3645,
+        "mv_speed": 26.0,
+        "ped_speed_distr": 1.0,
+        "bike_speed_distr": 1.0,
+        "mv_speed_distr": 1.0,
+        "display_level": 1.0,
+        "random_seed": 0.0
+    }
+}
